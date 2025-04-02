@@ -3,7 +3,7 @@ const projects = [
     {
         title: "To-do.art",
         description: "A Mondrian-inspired to-do app that turns task management into an artistic experience. Each task becomes part of a dynamic composition inspired by Piet Mondrian's iconic style.",
-        image: "https://images.unsplash.com/photo-1520333789090-1afc82db536a?ixlib=rb-4.0.3&auto=format&fit=crop&w=2102&q=80",
+        image: "images/mondrian.png",
         link: "https://to-do.art",
         tags: ["React", "Canvas", "Art"],
         gridColumn: "span 2",
@@ -21,7 +21,7 @@ const projects = [
     {
         title: "Car Racing Game",
         description: "An adrenaline-pumping racing experience built with modern web technologies. Race against time through dynamically generated tracks with realistic physics.",
-        image: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
+        image: "images/racing.png",
         link: "#",
         tags: ["Game", "WebGL", "Physics"],
         gridColumn: "span 1",
@@ -49,7 +49,7 @@ function createProjectTiles() {
         tile.style.gridRow = project.gridRow;
         
         tile.innerHTML = `
-            <div class="project-image" style="background-image: url('${project.image}');"></div>
+            <img class="project-image" src="${project.image}" alt="${project.title}">
             <div class="project-content">
                 <h2>${project.title}</h2>
                 <p>${project.description}</p>
