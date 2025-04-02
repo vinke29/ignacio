@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Me - Ignacio Vinke</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         .story-container {
             max-width: 1000px;
@@ -121,12 +122,44 @@
                 margin-bottom: 1rem;
             }
         }
+
+        .social-icons {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .social-icons a {
+            color: var(--color-forest);
+            font-size: 1.5rem;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            transform: translateY(-3px);
+            color: var(--color-red);
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>About Me</h1>
         <p><a href="index.html" style="color: var(--color-forest); text-decoration: none;">← Back to Projects</a></p>
+        <div class="social-icons">
+            <a href="https://www.linkedin.com/in/ivinke/" target="_blank" title="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://www.instagram.com/vinke29/?hl=en" target="_blank" title="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://x.com/igvinke/" target="_blank" title="Twitter">
+                <i class="fab fa-x-twitter"></i>
+            </a>
+            <a href="#contact-form" title="Email">
+                <i class="far fa-envelope"></i>
+            </a>
+        </div>
     </header>
 
     <div class="story-container">
@@ -175,7 +208,7 @@
             </div>
         </div>
 
-        <div class="contact-form">
+        <div class="contact-form" id="contact-form">
             <h2>Let's Connect</h2>
             <form action="https://formspree.io/f/xanepeqn" method="POST">
                 <div class="form-group">
