@@ -31,7 +31,7 @@ const projects = [
         title: "Cannon Game",
         description: "A physics-based cannon shooting game with destructible environments.",
         image: "images/cannon.png",
-        link: "https://github.com/vinke29/bomba",
+        link: "cannon.html",
         tags: ["Game", "Physics", "JavaScript"],
         gridColumn: "span 1",
         gridRow: "span 1"
