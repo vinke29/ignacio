@@ -19,7 +19,7 @@ const projects = [
         gridRow: "span 2"
     },
     {
-        title: "Car Racing Game",
+        title: "Car Racing Game (Desktop Only)",
         description: "A fast-paced racing game with realistic physics and dynamic tracks.",
         image: "images/racing.png",
         link: "racetrack.html",
