@@ -28,10 +28,10 @@ const projects = [
         gridRow: "span 1"
     },
     {
-        title: "Cannon Game",
-        description: "A physics-based cannon shooting game with destructible environments.",
+        title: "Bomba - Hotel Cannon Game",
+        description: "A physics-based cannon game where you aim at hotel rooms to eliminate evil businessmen. Features wind effects, fireworks, and progressive difficulty.",
         image: "images/cannon.png",
-        link: "cannon.html",
+        link: "https://vinke29.github.io/bomba/",
         tags: ["Game", "Physics", "JavaScript"],
         gridColumn: "span 1",
         gridRow: "span 1"
