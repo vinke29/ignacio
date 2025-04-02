@@ -29,14 +29,17 @@ header {
 }
 
 header h1 {
-    font-size: 3.5rem;
-    margin-bottom: 0.5rem;
     color: var(--color-forest);
+    margin-bottom: 1rem;
+    font-size: 3.5rem;
 }
 
 header p {
+    color: var(--color-gray);
     font-size: 1.2rem;
-    color: #666;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 /* Projects Grid */

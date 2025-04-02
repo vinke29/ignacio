@@ -2,7 +2,7 @@
 const projects = [
     {
         title: "To-do.art",
-        description: "A Mondrian-inspired to-do app that turns task management into an artistic experience. Each task becomes part of a dynamic composition inspired by Piet Mondrian's iconic style.",
+        description: "A Mondrian-inspired task manager that turns your to-do list into art.",
         image: "images/mondrian.png",
         link: "https://to-do.art",
         tags: ["React", "Canvas", "Art"],
@@ -11,8 +11,8 @@ const projects = [
     },
     {
         title: "Aguacate Morado",
-        description: "A minimalist photography portfolio showcasing visual stories through a carefully curated lens. Experience moments captured in their purest form.",
-        image: "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1934&q=80",
+        description: "A minimalist photography portfolio capturing moments through a unique lens.",
+        image: "images/Photography.png",
         link: "https://aguacatemorado.com",
         tags: ["Photography", "Gallery", "Art"],
         gridColumn: "span 1",
@@ -20,19 +20,19 @@ const projects = [
     },
     {
         title: "Car Racing Game",
-        description: "An adrenaline-pumping racing experience built with modern web technologies. Race against time through dynamically generated tracks with realistic physics.",
+        description: "A fast-paced racing game with realistic physics and dynamic tracks.",
         image: "images/racing.png",
-        link: "#",
+        link: "racetrack.html",
         tags: ["Game", "WebGL", "Physics"],
         gridColumn: "span 1",
         gridRow: "span 1"
     },
     {
-        title: "Hotel Cannon Game",
-        description: "A fun game where players aim a cannon at a hotel to hit specific target rooms. Test your accuracy and timing in this unique targeting challenge.",
-        image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
-        link: "https://github.com/yourusername/hotel-cannon-game",
-        tags: ["Game", "JavaScript", "Physics"],
+        title: "About Me",
+        description: "Learn more about who I am and what drives me.",
+        image: "images/aboutme.png",
+        link: "about.html",
+        tags: ["Personal", "Background"],
         gridColumn: "span 2",
         gridRow: "span 1"
     }

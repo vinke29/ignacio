@@ -1,0 +1,2689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Race Car Game</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #222;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        canvas {
+            display: block;
+            background: transparent; /* Changed from #4CAF50 to transparent */
+            margin-top: 60px;
+        }
+        .customizeMenu {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            padding: 40px 30px 30px;
+            border-radius: 10px;
+            color: white;
+            display: none;
+            z-index: 1000;
+            min-width: 350px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        .customizeMenu h2 {
+            margin: 0 0 20px 0;
+            text-align: center;
+            font-size: 24px;
+            color: #4CAF50;
+        }
+        .closeButton {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 24px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        .closeButton:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        .customizeMenu div {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .customizeMenu label {
+            min-width: 120px;
+            font-size: 16px;
+        }
+        .customizeMenu input[type="text"] {
+            flex: 1;
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #666;
+            background: #333;
+            color: white;
+            font-size: 14px;
+        }
+        .customizeMenu input[type="color"] {
+            width: 60px;
+            height: 35px;
+            padding: 2px;
+            border: 2px solid #666;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .customizeMenu button:last-child {
+            margin-top: 30px;
+            padding: 12px 20px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .customizeMenu button:last-child:hover {
+            background: #1976D2;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            z-index: 999;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            box-sizing: border-box;
+        }
+        .navbar-brand {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .navbar-menu {
+            display: flex;
+            gap: 15px;
+            margin-right: 20px;
+        }
+        .navbar-item {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .navbar-item:hover {
+            background: #2196F3;
+        }
+        .navbar-item select {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            min-width: 120px; /* Added to make dropdown more visible */
+        }
+        .navbar-item select:focus {
+            outline: none;
+            background: #444;
+        }
+        .navbar-item select option {
+            background: #333;
+            color: white;
+            padding: 8px;
+        }
+        .navbar-button {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 0 3px;
+            transition: background-color 0.3s;
+            white-space: nowrap;
+        }
+        .navbar-button:hover {
+            background: #1976D2;
+        }
+
+        /* Welcome screen styles */
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .welcome-content {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .welcome-content h1 {
+            margin: 0 0 30px 0;
+            color: #2196F3;
+            font-size: 48px;
+            text-shadow: 0 0 10px rgba(33, 150, 243, 0.5);
+            letter-spacing: 2px;
+        }
+
+        .welcome-text {
+            margin-bottom: 30px;
+        }
+
+        .welcome-text h2 {
+            color: #fff;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .welcome-text p {
+            color: #aaa;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .name-input-container {
+            margin: 30px 0;
+        }
+
+        .welcome-content input {
+            width: 80%;
+            padding: 15px 20px;
+            border: 2px solid rgba(33, 150, 243, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .welcome-content input:focus {
+            outline: none;
+            border-color: #2196F3;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(33, 150, 243, 0.3);
+        }
+
+        .welcome-content input::placeholder {
+            color: #666;
+        }
+
+        .start-button {
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .start-button:hover {
+            background: linear-gradient(45deg, #1976D2, #1565C0);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
+        }
+
+        .button-text {
+            margin-right: 5px;
+        }
+
+        .button-icon {
+            font-size: 24px;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .shake {
+            animation: shake 0.3s ease-in-out;
+        }
+
+        /* Track Selection Screen */
+        .track-select-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1999;
+        }
+
+        .track-select-content {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            width: 90%;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .track-select-content h2 {
+            color: #2196F3;
+            font-size: 36px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(33, 150, 243, 0.3);
+        }
+
+        .difficulty-section {
+            margin-bottom: 40px;
+        }
+
+        .difficulty-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .difficulty-option {
+            padding: 15px 30px;
+            border: 2px solid rgba(33, 150, 243, 0.3);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .difficulty-option:hover {
+            background: rgba(33, 150, 243, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .difficulty-option.selected {
+            background: rgba(33, 150, 243, 0.3);
+            border-color: #2196F3;
+            box-shadow: 0 0 15px rgba(33, 150, 243, 0.3);
+        }
+
+        .tracks-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .track-option {
+            position: relative;
+            padding: 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .track-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .track-option.selected {
+            border-color: #2196F3;
+            box-shadow: 0 0 20px rgba(33, 150, 243, 0.4);
+        }
+
+        .track-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .track-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .track-description {
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .continue-button {
+            margin-top: 30px;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .continue-button:hover {
+            background: linear-gradient(45deg, #1976D2, #1565C0);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
+        }
+
+        .continue-button:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome screen -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-content">
+            <h1>🏎️ Race Game</h1>
+            <div class="welcome-text">
+                <h2>Ready to Race?</h2>
+                <p>Enter your name below and prepare for an exciting racing experience!</p>
+            </div>
+            <div class="name-input-container">
+                <input type="text" id="welcomeNameInput" placeholder="Your racing name" maxlength="15" value="Schumacher">
+            </div>
+            <button onclick="window.startGame()" class="start-button">
+                <span class="button-text">Start Racing!</span>
+                <span class="button-icon">🏁</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <nav class="navbar">
+        <a href="#" class="navbar-brand">Race Game</a>
+        <div class="navbar-menu">
+            <div class="navbar-item">
+                <select id="difficultySelect" onchange="changeDifficulty()">
+                    <option value="beginner" selected>Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="expert">Expert</option>
+                </select>
+            </div>
+            <div class="navbar-item">
+                <select id="trackThemeSelect" onchange="changeTrackTheme()">
+                    <option value="traditional">Traditional</option>
+                    <option value="space">Space</option>
+                    <option value="candy">Candy Land</option>
+                    <option value="snow">Snow</option>
+                    <option value="desert">Desert</option>
+                </select>
+            </div>
+            <button class="navbar-button" onclick="toggleCustomizeMenu()">Customize</button>
+            <button class="navbar-button" onclick="resetRace()">Reset Race</button>
+        </div>
+    </nav>
+    <div class="customizeMenu" id="customizeMenu">
+        <button class="closeButton" onclick="toggleCustomizeMenu()">×</button>
+        <h2>Customize Drivers</h2>
+        <div>
+            <label>Player Name:</label>
+            <input type="text" id="playerName" value="Schumacher">
+            <input type="color" id="playerColor" value="#FF0000" class="colorPicker">
+        </div>
+        <div>
+            <label>AI Driver 1:</label>
+            <input type="text" id="ai1Name" value="Verstappen">
+            <input type="color" id="ai1Color" value="#0000FF" class="colorPicker">
+        </div>
+        <div>
+            <label>AI Driver 2:</label>
+            <input type="text" id="ai2Name" value="Hamilton">
+            <input type="color" id="ai2Color" value="#C0C0C0" class="colorPicker">
+        </div>
+        <button onclick="applyCustomization()">Apply</button>
+    </div>
+
+    <!-- Add this after your welcome screen div and before the game canvas -->
+    <div class="track-select-screen" id="trackSelectScreen">
+        <div class="track-select-content">
+            <h2>Choose Your Challenge</h2>
+            
+            <div class="difficulty-section">
+                <h3>Select Difficulty</h3>
+                <div class="difficulty-options">
+                    <div class="difficulty-option" data-difficulty="beginner">Beginner</div>
+                    <div class="difficulty-option" data-difficulty="intermediate">Intermediate</div>
+                    <div class="difficulty-option" data-difficulty="expert">Expert</div>
+                </div>
+            </div>
+
+            <h3>Select Track</h3>
+            <div class="tracks-grid">
+                <div class="track-option" data-track="traditional">
+                    <div class="track-icon">🏁</div>
+                    <div class="track-name">Traditional</div>
+                    <div class="track-description">Classic racing experience</div>
+                </div>
+                <div class="track-option" data-track="space">
+                    <div class="track-icon">🚀</div>
+                    <div class="track-name">Space</div>
+                    <div class="track-description">Race among the stars</div>
+                </div>
+                <div class="track-option" data-track="candy">
+                    <div class="track-icon">🍬</div>
+                    <div class="track-name">Candy Land</div>
+                    <div class="track-description">Sweet and colorful track</div>
+                </div>
+                <div class="track-option" data-track="snow">
+                    <div class="track-icon">❄️</div>
+                    <div class="track-name">Snow</div>
+                    <div class="track-description">Icy winter challenge</div>
+                </div>
+                <div class="track-option" data-track="desert">
+                    <div class="track-icon">🏜️</div>
+                    <div class="track-name">Desert</div>
+                    <div class="track-description">Hot sandy adventure</div>
+                </div>
+            </div>
+
+            <button class="continue-button" id="continueToGame" disabled>
+                <span>Start Racing</span>
+                <span class="button-icon">➡️</span>
+            </button>
+        </div>
+    </div>
+
+    <canvas id="gameCanvas"></canvas>
+    <script>
+        // At the very start of your script
+        window.toggleCustomizeMenu = null;
+        window.resetRace = null;
+        window.changeDifficulty = null;
+        window.changeTrackTheme = null;
+        window.applyCustomization = null;
+        window.startGame = null; // Add this line
+
+        // Wait for the window to load
+        window.addEventListener('load', function() {
+            // Get canvas and context
+            const canvas = document.getElementById('gameCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.style.display = 'none'; // Hide canvas initially
+            
+            // Make canvas fill most of the screen
+            canvas.width = window.innerWidth * 0.95;
+            canvas.height = window.innerHeight * 0.9;
+            
+            console.log("Canvas size:", canvas.width, "x", canvas.height);
+            
+            // Game constants
+            window.TOTAL_LAPS = 3;  // Expose to window object
+            
+            // Game variables - expose to window object
+            window.playerName = "Schumacher";
+            window.ai1Name = "Verstappen";
+            window.ai2Name = "Hamilton";
+            
+            window.car = {
+                x: canvas.width / 2,
+                y: canvas.height * 0.8,
+                width: 30,
+                height: 50,
+                speed: 0,
+                maxSpeed: 4.2,
+                acceleration: 0.16,
+                friction: 0.05,
+                angle: 0,
+                straightBoost: 0.03,
+                color: "#FF0000",
+                currentLap: 0,
+                totalLapTime: 0,
+                isPlayer: true,
+                position: 1,
+                finished: false,
+                finishTime: 0,
+                checkpoints: [],
+                lastLineCrossTime: 0,
+                name: window.playerName // Use window.playerName
+            };
+            
+            // Define the startGame function inside the load event handler
+            window.startGame = function() {
+                const nameInput = document.getElementById('welcomeNameInput');
+                const name = nameInput.value.trim();
+                
+                if (name === '') {
+                    nameInput.style.borderColor = '#ff4444';
+                    nameInput.classList.add('shake');
+                    setTimeout(() => {
+                        nameInput.classList.remove('shake');
+                    }, 500);
+                    return;
+                }
+                
+                // Update player name to the input value
+                window.playerName = name; // Use window.playerName to ensure it's accessible
+                document.getElementById('playerName').value = name; // This line updates the customize menu as well
+                
+                // Update car name to match player name
+                window.car.name = window.playerName;
+                
+                // Fade out welcome screen and show track selection
+                const welcomeScreen = document.getElementById('welcomeScreen');
+                welcomeScreen.style.opacity = '0';
+                welcomeScreen.style.transition = 'opacity 0.5s ease';
+                
+                setTimeout(() => {
+                    welcomeScreen.style.display = 'none';
+                    // Show track selection screen
+                    const trackSelect = document.getElementById('trackSelectScreen');
+                    trackSelect.style.display = 'flex';
+                    trackSelect.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        trackSelect.style.opacity = '1';
+                        trackSelect.style.transition = 'opacity 0.5s ease';
+                    }, 50);
+                }, 500);
+            };
+            
+            // Add event listener for Enter key on the welcome screen
+            document.getElementById('welcomeNameInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    window.startGame();
+                }
+            });
+            
+            // Rest of your code...
+            
+            // Game constants
+            // TOTAL_LAPS is now defined as window.TOTAL_LAPS at the top
+            
+            // Game variables
+            // playerName, ai1Name, ai2Name, and car are now defined as window properties at the top
+            
+            let opponents = [
+                {
+                    x: canvas.width / 2 - 40,
+                    y: canvas.height * 0.75,
+                    width: 30,
+                    height: 50,
+                    speed: 0,
+                    maxSpeed: 4.8,
+                    acceleration: 0.21,
+                    friction: 0.045,
+                    angle: 0,
+                    straightBoost: 0.035,
+                    color: "#0000FF",
+                    targetPoint: 0,
+                    difficulty: 0.85,
+                    currentLap: 0,
+                    totalLapTime: 0,
+                    isPlayer: false,
+                    position: 2,
+                    finished: false,
+                    finishTime: 0,
+                    checkpoints: [],
+                    name: "Verstappen" // Set name for AI Driver 1
+                },
+                {
+                    x: canvas.width / 2 + 40,
+                    y: canvas.height * 0.75,
+                    width: 30,
+                    height: 50,
+                    speed: 0,
+                    maxSpeed: 4.6,
+                    acceleration: 0.19,
+                    friction: 0.045,
+                    angle: 0,
+                    straightBoost: 0.033,
+                    color: "#C0C0C0",
+                    targetPoint: 0,
+                    difficulty: 0.82,
+                    currentLap: 0,
+                    totalLapTime: 0,
+                    isPlayer: false,
+                    position: 3,
+                    finished: false,
+                    finishTime: 0,
+                    checkpoints: [],
+                    name: "Hamilton" // Set name for AI Driver 2
+                }
+            ];
+            
+            // Create all cars array for easier management
+            let allCars = [window.car, ...opponents];
+            
+            let originalMaxSpeed = 4.2;
+            let keys = {};
+            
+            // Track boundaries
+            const outerTrack = [
+                { x: canvas.width * 0.1, y: canvas.height * 0.8 },
+                { x: canvas.width * 0.9, y: canvas.height * 0.8 },
+                { x: canvas.width * 0.9, y: canvas.height * 0.2 },
+                { x: canvas.width * 0.1, y: canvas.height * 0.2 }
+            ];
+            
+            const innerTrack = [
+                { x: canvas.width * 0.2, y: canvas.height * 0.7 },
+                { x: canvas.width * 0.8, y: canvas.height * 0.7 },
+                { x: canvas.width * 0.8, y: canvas.height * 0.3 },
+                { x: canvas.width * 0.2, y: canvas.height * 0.3 }
+            ];
+            
+            // Start/finish line
+            const startLineLeft = { x: canvas.width * 0.5, y: canvas.height * 0.8 };
+            const startLineRight = { x: canvas.width * 0.5, y: canvas.height * 0.7 };
+            
+            // Add this with the other global variables
+            let trackThemes = {
+                traditional: {
+                    background: "#4CAF50",  // Green grass
+                    track: "#555",         // Gray asphalt
+                    trackBorder: "white",
+                    treeFill: ["#006400", "#228B22"],  // Dark green trees
+                    treeTrunk: "#8B4513",  // Brown
+                    skyColor: "#87CEEB"    // Sky blue
+                },
+                space: {
+                    background: "#000033", // Dark space
+                    track: "#4A148C",     // Deep purple track
+                    trackBorder: "#67F3FF", // Neon blue
+                    treeFill: ["#FF4081", "#7C4DFF"],  // Pink and purple "space crystals"
+                    treeTrunk: "#311B92",  // Dark purple
+                    skyColor: "#000033"    // Space black
+                },
+                candy: {
+                    background: "#FFB6C1", // Light pink
+                    track: "#FF69B4",     // Hot pink
+                    trackBorder: "#FFF",   // White
+                    treeFill: ["#90EE90", "#87CEEB"],  // Light green and blue "candy trees"
+                    treeTrunk: "#DEB887",  // Light brown
+                    skyColor: "#FFE4E1"    // Misty rose
+                },
+                snow: {
+                    background: "#FFFFFF", // White snow
+                    track: "#B0E0E6",     // Powder blue ice
+                    trackBorder: "#87CEEB", // Sky blue
+                    treeFill: ["#FFFFFF", "#F0F8FF"],  // White snow covered
+                    treeTrunk: "#4A4A4A",  // Dark gray
+                    skyColor: "#E0FFFF"    // Light cyan
+                },
+                desert: {
+                    background: "#F4A460", // Sandy brown
+                    track: "#8B4513",     // Brown
+                    trackBorder: "#DEB887", // Burlywood
+                    treeFill: ["#228B22", "#006400"],  // Cactus green
+                    treeTrunk: "#556B2F",  // Dark olive green
+                    skyColor: "#87CEEB"    // Sky blue
+                }
+            };
+
+            let currentTheme = 'traditional';
+            
+            // Trees
+            let trees = [];
+            
+            // Waypoints for AI to follow
+            let waypoints = [];
+            
+            // Add these variables back near the top with other game variables
+            let lapTimes = [];
+            let bestLapTime = Infinity;
+            let raceStartTime = 0;
+            let currentLapStartTime = 0;
+            let raceFinished = false;
+            let raceStarted = false;
+            let crossedFinishLine = false;
+            let countdownStarted = false;
+            let countdownValue = 3;
+            let countdownStartTime = 0;
+            let firstLineCrossed = false;
+            let raceResult = "";
+            
+            // Update the CHECKPOINTS array to have more points around the track
+            const CHECKPOINTS = [
+                { x: canvas.width * 0.65, y: canvas.height * 0.75 }, // Right side
+                { x: canvas.width * 0.8, y: canvas.height * 0.75 },  // Far right
+                { x: canvas.width * 0.8, y: canvas.height * 0.5 },   // Right middle
+                { x: canvas.width * 0.8, y: canvas.height * 0.25 },  // Top right
+                { x: canvas.width * 0.5, y: canvas.height * 0.25 },  // Top middle
+                { x: canvas.width * 0.2, y: canvas.height * 0.25 },  // Top left
+                { x: canvas.width * 0.2, y: canvas.height * 0.5 },   // Left middle
+                { x: canvas.width * 0.2, y: canvas.height * 0.75 }   // Left side
+            ];
+
+            // Move these function definitions before the gameLoop() call
+            function toggleCustomizeMenu() {
+                const menu = document.getElementById('customizeMenu');
+                const overlay = document.getElementById('modalOverlay');
+                
+                const isHidden = menu.style.display === 'none' || menu.style.display === '';
+                
+                if (isHidden) {
+                    menu.style.display = 'block';
+                    overlay.style.display = 'block';
+                    raceStarted = false;
+                    countdownStarted = false;
+                } else {
+                    menu.style.display = 'none';
+                    overlay.style.display = 'none';
+                }
+            }
+
+            function applyCustomization() {
+                // Update names
+                window.playerName = document.getElementById('playerName').value;
+                window.ai1Name = document.getElementById('ai1Name').value;
+                window.ai2Name = document.getElementById('ai2Name').value;
+                
+                // Update car names
+                window.car.name = window.playerName;
+                opponents[0].name = window.ai1Name;
+                opponents[1].name = window.ai2Name;
+                
+                // Update colors
+                window.car.color = document.getElementById('playerColor').value;
+                opponents[0].color = document.getElementById('ai1Color').value;
+                opponents[1].color = document.getElementById('ai2Color').value;
+                
+                // Close menu and overlay
+                const menu = document.getElementById('customizeMenu');
+                const overlay = document.getElementById('modalOverlay');
+                menu.style.display = 'none';
+                overlay.style.display = 'none';
+                
+                // Reset race if it was in progress
+                if (raceStarted || raceFinished) {
+                    resetRace();
+                }
+                
+                console.log("Applied customization:", {
+                    player: { name: window.playerName, color: window.car.color },
+                    ai1: { name: window.ai1Name, color: opponents[0].color },
+                    ai2: { name: window.ai2Name, color: opponents[1].color }
+                });
+            }
+            
+            // Generate waypoints for AI to follow (middle of the track)
+            function generateWaypoints() {
+                const trackCenterX = canvas.width / 2;
+                const trackCenterY = canvas.height / 2;
+                const trackWidth = outerTrack[0].x - innerTrack[0].x;
+                const trackHeight = outerTrack[0].y - innerTrack[0].y;
+                
+                // Create more waypoints around the track for smoother navigation
+                waypoints = [];
+                
+                // Bottom straight - multiple points
+                for (let i = 0; i <= 4; i++) {
+                    waypoints.push({
+                        x: trackCenterX - trackWidth/4 + (i * trackWidth/8),
+                        y: outerTrack[0].y - trackHeight/4
+                    });
+                }
+                
+                // Right turn - more points for smooth cornering
+                for (let i = 0; i <= 3; i++) {
+                    const angle = Math.PI/2 * i/3;
+                    waypoints.push({
+                        x: outerTrack[1].x - trackWidth/3,
+                        y: outerTrack[0].y - trackHeight/4 + (outerTrack[2].y - outerTrack[0].y) * i/3
+                    });
+                }
+                
+                // Top straight - multiple points
+                for (let i = 0; i <= 4; i++) {
+                    waypoints.push({
+                        x: trackCenterX + trackWidth/4 - (i * trackWidth/8),
+                        y: outerTrack[2].y + trackHeight/4
+                    });
+                }
+                
+                // Left turn - more points for smooth cornering
+                for (let i = 0; i <= 3; i++) {
+                    const angle = Math.PI/2 * i/3;
+                    waypoints.push({
+                        x: outerTrack[3].x + trackWidth/3,
+                        y: outerTrack[2].y + trackHeight/4 + (outerTrack[0].y - outerTrack[2].y) * i/3
+                    });
+                }
+            }
+            
+            // Generate trees around the track
+            function generateTrees() {
+                const minSize = 20;
+                const maxSize = 40;
+                trees = [];
+                
+                // Helper function to check if a point is too close to the track
+                function isTooCloseToTrack(x, y, minDistance) {
+                    // Check distance to outer track
+                    for (let i = 0; i < outerTrack.length; i++) {
+                        const next = (i + 1) % outerTrack.length;
+                        const dist = distanceToSegment(
+                            x, y,
+                            outerTrack[i].x, outerTrack[i].y,
+                            outerTrack[next].x, outerTrack[next].y
+                        );
+                        if (dist < minDistance) return true;
+                    }
+                    
+                    // Check distance to inner track
+                    for (let i = 0; i < innerTrack.length; i++) {
+                        const next = (i + 1) % innerTrack.length;
+                        const dist = distanceToSegment(
+                            x, y,
+                            innerTrack[i].x, innerTrack[i].y,
+                            innerTrack[next].x, innerTrack[next].y
+                        );
+                        if (dist < minDistance) return true;
+                    }
+                    
+                    return false;
+                }
+                
+                // Helper function to calculate distance from point to line segment
+                function distanceToSegment(px, py, x1, y1, x2, y2) {
+                    const A = px - x1;
+                    const B = py - y1;
+                    const C = x2 - x1;
+                    const D = y2 - y1;
+                    
+                    const dot = A * C + B * D;
+                    const len_sq = C * C + D * D;
+                    let param = -1;
+                    
+                    if (len_sq !== 0) param = dot / len_sq;
+                    
+                    let xx, yy;
+                    
+                    if (param < 0) {
+                        xx = x1;
+                        yy = y1;
+                    } else if (param > 1) {
+                        xx = x2;
+                        yy = y2;
+                    } else {
+                        xx = x1 + param * C;
+                        yy = y1 + param * D;
+                    }
+                    
+                    const dx = px - xx;
+                    const dy = py - yy;
+                    
+                    return Math.sqrt(dx * dx + dy * dy);
+                }
+                
+                // Generate trees outside the track
+                for (let i = 0; i < 60; i++) {
+                    const size = Math.random() * (maxSize - minSize) + minSize;
+                    let x, y;
+                    let validPosition = false;
+                    
+                    // Try to find a valid position for the tree
+                    for (let attempt = 0; attempt < 50; attempt++) {
+                        x = Math.random() * canvas.width;
+                        y = Math.random() * canvas.height;
+                        
+                        // Check if position is outside track and not too close to track
+                        const outsideOuterTrack = !isInsidePolygon(x, y, outerTrack);
+                        const insideInnerTrack = isInsidePolygon(x, y, innerTrack);
+                        
+                        if ((outsideOuterTrack || insideInnerTrack) && !isTooCloseToTrack(x, y, 30)) {
+                            validPosition = true;
+                            break;
+                        }
+                    }
+                    
+                    if (validPosition) {
+                        const treeType = Math.random() > 0.5 ? 'pine' : 'oak';
+                        trees.push({
+                            x: x,
+                            y: y,
+                            size: size,
+                            type: treeType,
+                            color: treeType === 'pine' ? '#006400' : '#228B22'
+                        });
+                    }
+                }
+            }
+            
+            // Generate waypoints and trees when the game starts
+            generateWaypoints();
+            generateTrees();
+            
+            // Event listeners
+            document.addEventListener('keydown', function(event) {
+                keys[event.key] = true;
+                
+                // Start countdown if not already started
+                if (!countdownStarted && !raceStarted) {
+                    startCountdown();
+                }
+                
+                // Space key restarts the race if finished
+                if (event.key === ' ' && raceFinished) {
+                    resetRace();
+                }
+            });
+            
+            document.addEventListener('keyup', function(event) {
+                keys[event.key] = false;
+            });
+            
+            // Car image
+            const carImage = new Image();
+            carImage.src = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTgwIj48c3R5bGU+LnN0MHtmaWxsOiNmZjAwMDA7fS5zdDF7ZmlsbDojMDAwMDAwO30uc3Qye2ZpbGw6I2ZmZmZmZjt9LnN0M3tmaWxsOiMzMzM7fS5zdDR7ZmlsbDojZmYyMjIyO30uc3Q1e2ZpbGw6I2ZmOTk5OTt9PC9zdHlsZT48cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAgMjVDMjAgMjUgMjAgMTQwIDIwIDE0MEw4MCAxNDBMODAgMjVDODAgMjUgNjAgMTAgNDAgMTBDMjAgMTAgMjAgMjUgMjAgMjVaIi8+PHBhdGggY2xhc3M9InN0MSIgZD0iTTMwIDE0MEMzMCAxNDAgMjUgMTYwIDI1IDE2MEw0MCAxNzBMNjAgMTcwTDc1IDE2MEw3MCAxNDBMMzAgMTQwWiIvPjxjaXJjbGUgY2xhc3M9InN0MSIgY3g9IjI1IiBjeT0iMTIwIiByPSIxNSIvPjxjaXJjbGUgY2xhc3M9InN0MSIgY3g9Ijc1IiBjeT0iMTIwIiByPSIxNSIvPjxjaXJjbGUgY2xhc3M9InN0MiIgY3g9IjI1IiBjeT0iMTIwIiByPSI4Ii8+PGNpcmNsZSBjbGFzcz0ic3QyIiBjeD0iNzUiIGN5PSIxMjAiIHI9IjgiLz48cGF0aCBjbGFzcz0ic3QzIiBkPSJNMzUgMTI1TDY1IDEyNUw2NSAxNDBMMzUgMTQwWiIvPjxwYXRoIGNsYXNzPSJzdDMiIGQ9Ik0zMCAzMEw3MCAzMEw3MCA0MEwzMCA0MFoiLz48cGF0aCBjbGFzcz0ic3Q0IiBkPSJNMjUgNDBMNzUgNDBMNzUgMTAwTDI1IDEwMFoiLz48cGF0aCBjbGFzcz0ic3Q1IiBkPSJNNDUgMTVMNTUgMTVMNTUgMzBMNDUgMzBaIi8+PHBhdGggY2xhc3M9InN0MiIgZD0iTTMwIDUwTDQwIDUwTDQwIDgwTDMwIDgwWiIvPjxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik02MCA1MEw3MCA1MEw3MCA4MEw2MCA4MFoiLz48L3N2Zz4=";
+            
+            // Game functions
+            function startCountdown() {
+                countdownStarted = true;
+                countdownValue = 3;
+                countdownStartTime = Date.now();
+                
+                // Position cars properly at the start - all on the track
+                // Position player car
+                window.car.x = startLineLeft.x - 50;
+                window.car.y = (startLineLeft.y + startLineRight.y) / 2; // Middle of track
+                window.car.angle = 0;
+                window.car.speed = 0;
+                window.car.currentLap = 0;
+                window.car.position = 1;
+                window.car.finished = false;
+                window.car.finishTime = 0;
+                
+                // Position AI cars
+                opponents[0].x = window.car.x - 30;
+                opponents[0].y = window.car.y + 20;
+                opponents[0].angle = 0;
+                opponents[0].speed = 0;
+                opponents[0].targetPoint = 0;
+                opponents[0].currentLap = 0;
+                opponents[0].position = 2;
+                opponents[0].finished = false;
+                opponents[0].finishTime = 0;
+                
+                opponents[1].x = window.car.x - 30;
+                opponents[1].y = window.car.y - 20;
+                opponents[1].angle = 0;
+                opponents[1].speed = 0;
+                opponents[1].targetPoint = 0;
+                opponents[1].currentLap = 0;
+                opponents[1].position = 3;
+                opponents[1].finished = false;
+                opponents[1].finishTime = 0;
+                
+                // Reset race variables
+                lapTimes = [];
+                bestLapTime = Infinity;
+                raceFinished = false;
+                crossedFinishLine = false;
+                firstLineCrossed = false;
+                raceResult = "";
+            }
+            
+            function startRace() {
+                raceStarted = true;
+                countdownStarted = false;
+                raceStartTime = Date.now();
+                currentLapStartTime = raceStartTime;
+            }
+            
+            function resetRace() {
+                // Reset all race state variables
+                raceStarted = false;
+                countdownStarted = false;
+                raceFinished = false;
+                firstLineCrossed = false;
+                crossedFinishLine = false;
+                lapTimes = [];
+                bestLapTime = Infinity;
+                raceResult = "";
+                raceStartTime = 0;
+                currentLapStartTime = 0;
+
+                // Reset all cars
+                window.car.speed = 0;
+                window.car.currentLap = 0;
+                window.car.position = 1;
+                window.car.finished = false;
+                window.car.finishTime = 0;
+                window.car.totalLapTime = 0;
+
+                // Reset AI cars
+                opponents.forEach((opponent, index) => {
+                    opponent.speed = 0;
+                    opponent.currentLap = 0;
+                    opponent.position = index + 2;
+                    opponent.finished = false;
+                    opponent.finishTime = 0;
+                    opponent.totalLapTime = 0;
+                    opponent.targetPoint = 0;
+                });
+
+                // Position cars at start
+                window.car.x = startLineLeft.x - 50;
+                window.car.y = (startLineLeft.y + startLineRight.y) / 2;
+                window.car.angle = 0;
+
+                opponents[0].x = window.car.x - 30;
+                opponents[0].y = window.car.y + 20;
+                opponents[0].angle = 0;
+
+                opponents[1].x = window.car.x - 30;
+                opponents[1].y = window.car.y - 20;
+                opponents[1].angle = 0;
+
+                // Start new countdown
+                startCountdown();
+                
+                console.log("Race reset!"); // Debug log
+
+                // Reset checkpoints
+                window.car.checkpoints = [];
+                opponents.forEach(opponent => {
+                    opponent.checkpoints = [];
+                });
+            }
+            
+            function completeLap(carObj) {
+                const lapEndTime = Date.now();
+                const lapTime = lapEndTime - currentLapStartTime;
+                
+                // Minimum lap time check (2 seconds)
+                if (lapTime < 2000) {
+                    console.log("Lap time too short, ignoring...");
+                    return;
+                }
+                
+                // Update lap counter and times
+                carObj.currentLap++;
+                carObj.totalLapTime += lapTime;
+                
+                // Store lap time and update best lap
+                if (carObj.isPlayer) {
+                    lapTimes.push(lapTime);
+                    if (lapTime < bestLapTime) {
+                        bestLapTime = lapTime;
+                    }
+                    console.log(`Lap completed: ${carObj.currentLap} of ${TOTAL_LAPS} in ${formatTime(lapTime)}`);
+                }
+                
+                // Set start time for next lap
+                currentLapStartTime = lapEndTime;
+                
+                // Check for race completion (after 3 laps)
+                if (carObj.currentLap >= 4) {
+                    carObj.finished = true;
+                    carObj.finishTime = Date.now() - raceStartTime;
+                    checkRaceFinished();
+                }
+            }
+            
+            function checkRaceFinished() {
+                // If race is already marked as finished, do nothing
+                if (raceFinished) return;
+                
+                // If any car has finished, mark the race as finished
+                const anyCarFinished = allCars.some(car => car.finished);
+                
+                if (anyCarFinished) {
+                    raceFinished = true;
+                    
+                    // Determine final positions based on lap and progress
+                    determineRaceResults();
+                }
+            }
+            
+            function determineRaceResults() {
+                // Sort cars by finished status (finished first), then by laps completed, then by total time
+                const sortedCars = [...allCars].sort((a, b) => {
+                    if (a.finished && !b.finished) return -1;
+                    if (!a.finished && b.finished) return 1;
+                    
+                    if (a.currentLap !== b.currentLap) {
+                        return b.currentLap - a.currentLap; // More laps is better
+                    }
+                    
+                    return a.totalLapTime - b.totalLapTime; // Less time is better
+                });
+                
+                // Assign positions
+                sortedCars.forEach((car, index) => {
+                    car.position = index + 1;
+                });
+                
+                // Create result message based on player position
+                if (car.position === 1) {
+                    raceResult = "Congratulations! You won the race!";
+                } else if (car.position === 2) {
+                    raceResult = "Good effort! You finished in second place.";
+                } else {
+                    raceResult = "You need to improve. Try again!";
+                }
+            }
+            
+            function formatTime(milliseconds) {
+                if (milliseconds === undefined || milliseconds === null || milliseconds < 0) return "00:00.00";
+                
+                const totalSeconds = Math.floor(milliseconds / 1000);
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                const ms = Math.floor((milliseconds % 1000) / 10);
+                
+                return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${ms.toString().padStart(2, '0')}`;
+            }
+            
+            function isInsidePolygon(x, y, polygon) {
+                let inside = false;
+                for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+                    let xi = polygon[i].x, yi = polygon[i].y;
+                    let xj = polygon[j].x, yj = polygon[j].y;
+                    let intersect = ((yi > y) !== (yj > y)) &&
+                        (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+                    if (intersect) inside = !inside;
+                }
+                return inside;
+            }
+            
+            // Remove checkpoint-related code
+            function isCarCrossingFinishLine(carObj) {
+                // Previous and current position
+                const prevX = carObj.x - Math.cos(carObj.angle * (Math.PI / 180)) * carObj.speed;
+                const currX = carObj.x;
+                
+                // Very simple line crossing check with huge margin
+                const marginOfError = 200; // Very forgiving margin
+                const isValidCrossing = (prevX <= startLineLeft.x && currX > startLineLeft.x) && 
+                                      (carObj.y >= startLineRight.y - marginOfError && 
+                                       carObj.y <= startLineLeft.y + marginOfError);
+                
+                // Simple cooldown check
+                if (!carObj.lastLineCrossTime) carObj.lastLineCrossTime = 0;
+                const timeSinceLastCross = Date.now() - carObj.lastLineCrossTime;
+                
+                if (isValidCrossing && timeSinceLastCross > 1000) {
+                    carObj.lastLineCrossTime = Date.now();
+                    console.log(`${carObj.isPlayer ? 'Player' : 'AI'} crossed finish line`);
+                    return true;
+                }
+                
+                return false;
+            }
+
+            // Update the checkpoint detection function to be more forgiving
+            function updateCheckpoints(carObj) {
+                CHECKPOINTS.forEach((checkpoint, index) => {
+                    if (!carObj.checkpoints.includes(index)) {
+                        const distance = Math.sqrt(
+                            Math.pow(carObj.x - checkpoint.x, 2) + 
+                            Math.pow(carObj.y - checkpoint.y, 2)
+                        );
+                        
+                        // Increased checkpoint radius from 50 to 80
+                        const checkpointRadius = 80;
+                        
+                        if (distance < checkpointRadius) {
+                            // More forgiving checkpoint sequence
+                            // Allow hitting checkpoints within a range of ±1 from the expected next checkpoint
+                            const expectedNext = carObj.checkpoints.length;
+                            const allowedCheckpoints = [
+                                expectedNext,
+                                (expectedNext + 1) % CHECKPOINTS.length,
+                                expectedNext === 0 ? CHECKPOINTS.length - 1 : expectedNext - 1
+                            ];
+                            
+                            if (carObj.checkpoints.length === 0 || allowedCheckpoints.includes(index)) {
+                                if (!carObj.checkpoints.includes(index)) {
+                                    carObj.checkpoints.push(index);
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Check collision with trees
+            function checkTreeCollision(carObj) {
+                for (let tree of trees) {
+                    const dx = carObj.x - tree.x;
+                    const dy = carObj.y - tree.y;
+                    const distance = Math.sqrt(dx*dx + dy*dy);
+                    
+                    // If car is too close to tree
+                    if (distance < tree.size + carObj.width/2) {
+                        // Collision detected - stop the car
+                        carObj.speed = 0;
+                        
+                        // Push car slightly away from tree
+                        if (distance > 0) {
+                            carObj.x += (dx/distance) * 2;
+                            carObj.y += (dy/distance) * 2;
+                        }
+                        
+                        return true;
+                    }
+                }
+                return false;
+            }
+            
+            function updateCar() {
+                // If countdown is active or race is finished, don't allow movement
+                if (countdownStarted || (raceFinished && window.car.finished)) {
+                    return;
+                }
+                
+                let rad = window.car.angle * (Math.PI / 180);
+                
+                if (keys['ArrowLeft'] || keys['a']) window.car.angle -= 3;
+                if (keys['ArrowRight'] || keys['d']) window.car.angle += 3;
+                
+                // Check if car is on track
+                let onTrack = isInsidePolygon(window.car.x, window.car.y, outerTrack) &&
+                             !isInsidePolygon(window.car.x, window.car.y, innerTrack);
+                
+                // Adjust speed based on terrain
+                if (onTrack) {
+                    window.car.maxSpeed = originalMaxSpeed;
+                    window.car.friction = 0.03;
+                } else {
+                    window.car.maxSpeed = originalMaxSpeed * 0.4;
+                    window.car.friction = 0.08;
+                }
+                
+                // Check if turning
+                const isTurning = keys['ArrowLeft'] || keys['ArrowRight'] || keys['a'] || keys['d'];
+                
+                if (!firstLineCrossed) {
+                    // Only forward movement until first line crossing
+                    if (keys['ArrowUp'] || keys['w']) {
+                        // Add straight line boost if not turning
+                        if (!isTurning && window.car.speed > window.car.maxSpeed * 0.5) {
+                            window.car.speed += window.car.acceleration + window.car.straightBoost;
+                        } else {
+                            window.car.speed += window.car.acceleration;
+                        }
+                        
+                        if (window.car.speed > window.car.maxSpeed) window.car.speed = window.car.maxSpeed;
+                    } else {
+                        // Slow down if not accelerating
+                        if (window.car.speed > 0) window.car.speed -= window.car.friction;
+                        if (Math.abs(window.car.speed) < window.car.friction) window.car.speed = 0;
+                    }
+                    
+                    // Prevent backward movement
+                    if (window.car.speed < 0) window.car.speed = 0;
+                } else {
+                    // Normal movement after first crossing
+                    if (keys['ArrowUp'] || keys['w']) {
+                        // Add straight line boost
+                        if (!isTurning && window.car.speed > window.car.maxSpeed * 0.5) {
+                            window.car.speed += window.car.acceleration + window.car.straightBoost;
+                        } else {
+                            window.car.speed += window.car.acceleration;
+                        }
+                        
+                        if (window.car.speed > window.car.maxSpeed) window.car.speed = window.car.maxSpeed;
+                    } 
+                    if (keys['ArrowDown'] || keys['s']) {
+                        window.car.speed -= window.car.acceleration;
+                        if (window.car.speed < -window.car.maxSpeed / 2) window.car.speed = -window.car.maxSpeed / 2;
+                    }
+                    
+                    if (!keys['ArrowUp'] && !keys['ArrowDown'] && !keys['w'] && !keys['s']) {
+                        if (window.car.speed > 0) window.car.speed -= window.car.friction;
+                        else if (window.car.speed < 0) window.car.speed += window.car.friction;
+                        if (Math.abs(window.car.speed) < window.car.friction) window.car.speed = 0;
+                    }
+                }
+                
+                // Calculate new position
+                let newX = window.car.x + Math.cos(rad) * window.car.speed;
+                let newY = window.car.y + Math.sin(rad) * window.car.speed;
+                
+                // Update position
+                window.car.x = newX;
+                window.car.y = newY;
+                
+                // Check collision with trees
+                const hitTree = checkTreeCollision(window.car);
+                
+                // Keep car within canvas
+                if (window.car.x < 0) window.car.x = 0;
+                if (window.car.x > canvas.width) window.car.x = canvas.width;
+                if (window.car.y < 0) window.car.y = 0;
+                if (window.car.y > canvas.height) window.car.y = canvas.height;
+                
+                // Simplified lap counting for player
+                if (raceStarted && !window.car.finished && isCarCrossingFinishLine(window.car)) {
+                    if (window.car.currentLap === 0) {
+                        window.car.currentLap = 1;
+                        currentLapStartTime = Date.now();
+                        console.log("First lap started");
+                    } else {
+                        const lapTime = Date.now() - currentLapStartTime;
+                        window.car.currentLap++;
+                        console.log(`Completed lap ${window.car.currentLap} of ${TOTAL_LAPS}`);
+                        
+                        // Store lap time
+                        lapTimes.push(lapTime);
+                        if (lapTime < bestLapTime) {
+                            bestLapTime = lapTime;
+                        }
+                        
+                        // Set start time for next lap
+                        currentLapStartTime = Date.now();
+                        
+                        // Check for race completion after 3rd lap is done
+                        if (window.car.currentLap >= 4) {  // Changed to check for 4 since we increment before checking
+                            window.car.finished = true;
+                            window.car.finishTime = Date.now() - raceStartTime;
+                            console.log("Player finished race!", {
+                                raceStartTime: raceStartTime,
+                                finishTime: Date.now() - raceStartTime,
+                                formattedTime: formatTime(window.car.finishTime)
+                            });
+                            checkRaceFinished();
+                        }
+                    }
+                }
+
+                // Update checkpoints
+                updateCheckpoints(window.car);
+            }
+            
+            // Update AI opponent
+            function updateOpponent(opponent) {
+                // Don't update if race hasn't started, countdown is active, or opponent finished race
+                if (countdownStarted || !raceStarted || (raceFinished && opponent.finished)) {
+                    return;
+                }
+                
+                // Store original max speed for this frame
+                const baseMaxSpeed = opponent.maxSpeed;
+
+                // Enhanced rubber-banding logic for better catch-up
+                if (opponent.position > 1) {
+                    // More gentle catch-up boost for trailing AI
+                    opponent.maxSpeed = baseMaxSpeed * (1 + ((opponent.position - 1) * 0.05));
+                } else if (opponent.position === 1 && window.car.position > 1) {
+                    // If AI is leading and player is behind, slow down AI moderately
+                    const playerLapDiff = opponent.currentLap - window.car.currentLap;
+                    if (playerLapDiff > 0) {
+                        // Slow down if AI is a lap ahead, but not too much
+                        opponent.maxSpeed = baseMaxSpeed * 0.8;
+                    } else {
+                        // Small slowdown when leading
+                        opponent.maxSpeed = baseMaxSpeed * 0.9;
+                    }
+                }
+                
+                // Get the current target waypoint
+                const target = waypoints[opponent.targetPoint];
+                
+                // Calculate angle to target
+                const dx = target.x - opponent.x;
+                const dy = target.y - opponent.y;
+                const targetAngle = Math.atan2(dy, dx) * 180 / Math.PI;
+                
+                // Calculate angle difference
+                let angleDiff = targetAngle - opponent.angle;
+                
+                // Normalize angle difference to [-180, 180]
+                while (angleDiff > 180) angleDiff -= 360;
+                while (angleDiff < -180) angleDiff += 360;
+                
+                // Calculate distance to waypoint
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                
+                // Gradually improve AI skill as race progresses
+                opponent.difficulty = Math.min(0.99, opponent.difficulty + 0.001);
+                
+                // Improved corner handling
+                const isTurning = Math.abs(angleDiff) > 20; // Reduced threshold for earlier turning
+                
+                // More precise steering adjustments
+                const steeringFactor = Math.min(6.0, 4.0 + (Math.abs(angleDiff) / 30));
+                
+                // Smoother turning with better precision
+                if (angleDiff > 1.0) { // Reduced threshold for more responsive turning
+                    opponent.angle += steeringFactor * opponent.difficulty;
+                } else if (angleDiff < -1.0) {
+                    opponent.angle -= steeringFactor * opponent.difficulty;
+                }
+                
+                // Earlier waypoint targeting for smoother racing line
+                if (dist < 70 + (opponent.speed * 12)) {
+                    opponent.targetPoint = (opponent.targetPoint + 1) % waypoints.length;
+                }
+                
+                // Check if on track
+                let onTrack = isInsidePolygon(opponent.x, opponent.y, outerTrack) &&
+                             !isInsidePolygon(opponent.x, opponent.y, innerTrack);
+                
+                // Track awareness and recovery
+                if (onTrack) {
+                    // Good conditions on track
+                    opponent.friction = 0.03;
+                    
+                    // Adjust speed based on corner sharpness
+                    if (isTurning) {
+                        // More sophisticated corner speed adjustment
+                        const corneringFactor = 1 - (Math.abs(angleDiff) / 180) * 0.4;
+                        opponent.maxSpeed = opponent.maxSpeed * opponent.difficulty * corneringFactor;
+                        opponent.speed += opponent.acceleration * (1.2 - (Math.abs(angleDiff) / 180));
+                    } else {
+                        // Faster acceleration on straights
+                        opponent.speed += opponent.acceleration + (opponent.straightBoost * 1.2);
+                    }
+                } else {
+                    // Less severe penalties for being off track
+                    opponent.maxSpeed = opponent.maxSpeed * 0.7; // Increased from 0.5
+                    opponent.friction = 0.08; // Reduced from 0.12
+                    
+                    // Find nearest point on track
+                    let nearestPoint = findNearestTrackPoint(opponent.x, opponent.y);
+                    
+                    // Calculate angle to nearest track point
+                    const dxTrack = nearestPoint.x - opponent.x;
+                    const dyTrack = nearestPoint.y - opponent.y;
+                    const trackAngle = Math.atan2(dyTrack, dxTrack) * 180 / Math.PI;
+                    
+                    // Calculate difference between current angle and angle toward track
+                    let trackDiff = trackAngle - opponent.angle;
+                    while (trackDiff > 180) trackDiff -= 360;
+                    while (trackDiff < -180) trackDiff += 360;
+                    
+                    // More aggressive steering back to track
+                    const steeringStrength = Math.min(8, 5 + (Math.abs(trackDiff) / 20));
+                    opponent.angle += Math.sign(trackDiff) * steeringStrength;
+                    
+                    // Maintain some speed while returning to track
+                    opponent.speed = Math.max(opponent.speed, opponent.maxSpeed * 0.5);
+                    opponent.speed += opponent.acceleration * 0.5;
+                }
+                
+                // Cap speed to maximum
+                if (opponent.speed > opponent.maxSpeed) {
+                    opponent.speed = opponent.maxSpeed;
+                }
+                
+                // Apply friction
+                if (opponent.speed > 0) {
+                    opponent.speed -= opponent.friction;
+                }
+                if (Math.abs(opponent.speed) < opponent.friction) {
+                    opponent.speed = 0;
+                }
+                
+                // Convert angle to radians for position calculation
+                const rad = opponent.angle * Math.PI / 180;
+                
+                // Calculate new position
+                let newX = opponent.x + Math.cos(rad) * opponent.speed;
+                let newY = opponent.y + Math.sin(rad) * opponent.speed;
+                
+                // Update position
+                opponent.x = newX;
+                opponent.y = newY;
+                
+                // Check collision with trees
+                checkTreeCollision(opponent);
+                
+                // Ensure opponent stays on screen
+                if (opponent.x < 0) opponent.x = 0;
+                if (opponent.x > canvas.width) opponent.x = canvas.width;
+                if (opponent.y < 0) opponent.y = 0;
+                if (opponent.y > canvas.height) opponent.y = canvas.height;
+                
+                // Simplified lap counting for AI
+                if (raceStarted && !opponent.finished && isCarCrossingFinishLine(opponent)) {
+                    if (opponent.currentLap === 0) {
+                        opponent.currentLap = 1;
+                        console.log(`${opponent.color} AI started first lap`);
+                    } else {
+                        opponent.currentLap++;
+                        console.log(`${opponent.color} AI completed lap ${opponent.currentLap} of ${TOTAL_LAPS}`);
+                        
+                        if (opponent.currentLap >= 4) {  // Changed to check for 4 since we increment before checking
+                            opponent.finished = true;
+                            opponent.finishTime = Date.now() - raceStartTime;
+                            checkRaceFinished();
+                        }
+                    }
+                }
+
+                // Add difficulty-specific behavior
+                const currentDifficulty = document.getElementById('difficultySelect').value;
+                if (currentDifficulty === 'beginner') {
+                    // Very rare and gentle steering adjustments
+                    if (Math.random() < 0.03) {
+                        opponent.angle += (Math.random() - 0.3) * 10;
+                    }
+                    
+                    // Almost never miss turns
+                    if (Math.random() < 0.005) {
+                        opponent.targetPoint = (opponent.targetPoint + 1) % waypoints.length;
+                    }
+                    
+                    // Rare slight slowdowns
+                    if (Math.random() < 0.008) {
+                        opponent.speed *= 0.6;
+                    }
+                } else if (currentDifficulty === 'intermediate') {
+                    // Very rare steering adjustments
+                    if (Math.random() < 0.02) {
+                        opponent.angle += (Math.random() - 0.3) * 5;
+                    }
+                    
+                    // Almost never miss turns
+                    if (Math.random() < 0.005) {
+                        opponent.targetPoint = (opponent.targetPoint + 1) % waypoints.length;
+                    }
+                    
+                    // Very rare slowdowns
+                    if (Math.random() < 0.005) {
+                        opponent.speed *= 0.8;
+                    }
+                } else if (currentDifficulty === 'expert') {
+                    // Expert mode - very minimal mistakes
+                    if (Math.random() < 0.005) {
+                        opponent.angle += (Math.random() - 0.5) * 3;
+                    }
+                    
+                    if (Math.random() < 0.001) {
+                        opponent.targetPoint = (opponent.targetPoint + 1) % waypoints.length;
+                    }
+                    
+                    if (Math.random() < 0.001) {
+                        opponent.speed *= 0.95;
+                    }
+                }
+
+                // Reset maxSpeed at the end of the update
+                opponent.maxSpeed = baseMaxSpeed;
+            }
+            
+            // Add this new helper function to find nearest point on track
+            function findNearestTrackPoint(x, y) {
+                let nearestDist = Infinity;
+                let nearestPoint = { x: 0, y: 0 };
+                
+                // Check outer track segments
+                for (let i = 0; i < outerTrack.length; i++) {
+                    const p1 = outerTrack[i];
+                    const p2 = outerTrack[(i + 1) % outerTrack.length];
+                    const point = nearestPointOnLine(x, y, p1.x, p1.y, p2.x, p2.y);
+                    const dist = distance(x, y, point.x, point.y);
+                    
+                    if (dist < nearestDist) {
+                        nearestDist = dist;
+                        nearestPoint = point;
+                    }
+                }
+                
+                // Check inner track segments
+                for (let i = 0; i < innerTrack.length; i++) {
+                    const p1 = innerTrack[i];
+                    const p2 = innerTrack[(i + 1) % innerTrack.length];
+                    const point = nearestPointOnLine(x, y, p1.x, p1.y, p2.x, p2.y);
+                    const dist = distance(x, y, point.x, point.y);
+                    
+                    if (dist < nearestDist) {
+                        nearestDist = dist;
+                        nearestPoint = point;
+                    }
+                }
+                
+                return nearestPoint;
+            }
+            
+            // Helper function to find nearest point on a line segment
+            function nearestPointOnLine(x, y, x1, y1, x2, y2) {
+                const A = x - x1;
+                const B = y - y1;
+                const C = x2 - x1;
+                const D = y2 - y1;
+                
+                const dot = A * C + B * D;
+                const len_sq = C * C + D * D;
+                let param = -1;
+                
+                if (len_sq !== 0) param = dot / len_sq;
+                
+                let xx, yy;
+                
+                if (param < 0) {
+                    xx = x1;
+                    yy = y1;
+                } else if (param > 1) {
+                    xx = x2;
+                    yy = y2;
+                } else {
+                    xx = x1 + param * C;
+                    yy = y1 + param * D;
+                }
+                
+                return { x: xx, y: yy };
+            }
+            
+            // Helper function to calculate distance between points
+            function distance(x1, y1, x2, y2) {
+                const dx = x2 - x1;
+                const dy = y2 - y1;
+                return Math.sqrt(dx * dx + dy * dy);
+            }
+            
+            function generateTrack() {
+                const theme = trackThemes[currentTheme];
+                
+                // Draw sky/background
+                ctx.fillStyle = theme.skyColor;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw background
+                ctx.fillStyle = theme.background;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw trees with theme colors
+                drawTrees();
+                
+                // Draw track with rounded corners
+                ctx.fillStyle = theme.track;
+                ctx.beginPath();
+                
+                // Outer track with rounded corners
+                const cornerRadius = 50; // Adjust this value to change corner roundness
+                
+                // Start at the bottom-right corner
+                ctx.moveTo(outerTrack[0].x + cornerRadius, outerTrack[0].y);
+                
+                // Bottom edge
+                ctx.lineTo(outerTrack[1].x - cornerRadius, outerTrack[1].y);
+                // Bottom-right corner
+                ctx.arcTo(outerTrack[1].x, outerTrack[1].y,
+                          outerTrack[1].x, outerTrack[1].y - cornerRadius,
+                          cornerRadius);
+                
+                // Right edge
+                ctx.lineTo(outerTrack[2].x, outerTrack[2].y + cornerRadius);
+                // Top-right corner
+                ctx.arcTo(outerTrack[2].x, outerTrack[2].y,
+                          outerTrack[2].x - cornerRadius, outerTrack[2].y,
+                          cornerRadius);
+                
+                // Top edge
+                ctx.lineTo(outerTrack[3].x + cornerRadius, outerTrack[3].y);
+                // Top-left corner
+                ctx.arcTo(outerTrack[3].x, outerTrack[3].y,
+                          outerTrack[3].x, outerTrack[3].y + cornerRadius,
+                          cornerRadius);
+                
+                // Left edge
+                ctx.lineTo(outerTrack[0].x, outerTrack[0].y - cornerRadius);
+                // Bottom-left corner
+                ctx.arcTo(outerTrack[0].x, outerTrack[0].y,
+                          outerTrack[0].x + cornerRadius, outerTrack[0].y,
+                          cornerRadius);
+                
+                ctx.closePath();
+                ctx.fill();
+                
+                // Inner track with rounded corners (smaller radius)
+                ctx.fillStyle = theme.track;
+                ctx.beginPath();
+                
+                const innerRadius = 40;
+                
+                // Start at the bottom-right corner
+                ctx.moveTo(innerTrack[0].x + innerRadius, innerTrack[0].y);
+                
+                // Bottom edge
+                ctx.lineTo(innerTrack[1].x - innerRadius, innerTrack[1].y);
+                // Bottom-right corner
+                ctx.arcTo(innerTrack[1].x, innerTrack[1].y,
+                          innerTrack[1].x, innerTrack[1].y - innerRadius,
+                          innerRadius);
+                
+                // Right edge
+                ctx.lineTo(innerTrack[2].x, innerTrack[2].y + innerRadius);
+                // Top-right corner
+                ctx.arcTo(innerTrack[2].x, innerTrack[2].y,
+                          innerTrack[2].x - innerRadius, innerTrack[2].y,
+                          innerRadius);
+                
+                // Top edge
+                ctx.lineTo(innerTrack[3].x + innerRadius, innerTrack[3].y);
+                // Top-left corner
+                ctx.arcTo(innerTrack[3].x, innerTrack[3].y,
+                          innerTrack[3].x, innerTrack[3].y + innerRadius,
+                          innerRadius);
+                
+                // Left edge
+                ctx.lineTo(innerTrack[0].x, innerTrack[0].y - innerRadius);
+                // Bottom-left corner
+                ctx.arcTo(innerTrack[0].x, innerTrack[0].y,
+                          innerTrack[0].x + innerRadius, innerTrack[0].y,
+                          innerRadius);
+                
+                ctx.closePath();
+                ctx.fill();
+                
+                // Draw track borders
+                ctx.strokeStyle = theme.trackBorder;
+                ctx.lineWidth = 5;
+                ctx.setLineDash([15, 10]);
+                
+                // Outer border
+                ctx.beginPath();
+                ctx.moveTo(outerTrack[0].x, outerTrack[0].y);
+                for (let i = 1; i < outerTrack.length; i++) {
+                    ctx.lineTo(outerTrack[i].x, outerTrack[i].y);
+                }
+                ctx.closePath();
+                ctx.stroke();
+                
+                // Inner border
+                ctx.beginPath();
+                ctx.moveTo(innerTrack[0].x, innerTrack[0].y);
+                for (let i = 1; i < innerTrack.length; i++) {
+                    ctx.lineTo(innerTrack[i].x, innerTrack[i].y);
+                }
+                ctx.closePath();
+                ctx.stroke();
+                
+                ctx.setLineDash([]);
+                
+                // Draw start/finish line
+                ctx.beginPath();
+                ctx.moveTo(startLineLeft.x, startLineLeft.y);
+                ctx.lineTo(startLineRight.x, startLineRight.y);
+                ctx.lineWidth = 8;
+                ctx.setLineDash([10, 10]);
+                ctx.strokeStyle = "black";
+                ctx.stroke();
+                
+                // Checkered pattern
+                ctx.beginPath();
+                ctx.moveTo(startLineLeft.x, startLineLeft.y);
+                ctx.lineTo(startLineRight.x, startLineRight.y);
+                ctx.lineWidth = 8;
+                ctx.setLineDash([10, 10]);
+                ctx.lineDashOffset = 10;
+                ctx.strokeStyle = "white";
+                ctx.stroke();
+                
+                ctx.setLineDash([]);
+                
+                // Debug: Draw waypoints for AI
+                if (false) { // Set to true to see waypoints
+                    ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
+                    for (let point of waypoints) {
+                        ctx.beginPath();
+                        ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            }
+            
+            function drawCar(carObj) {
+                ctx.save();
+                ctx.translate(carObj.x, carObj.y);
+                ctx.rotate((carObj.angle - 90) * Math.PI / 180);
+                
+                // Draw a cooler car body
+                const w = carObj.width;
+                const h = carObj.height;
+                
+                // Draw shadow
+                ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
+                ctx.beginPath();
+                ctx.ellipse(0, h/2, w/1.5, w/3, 0, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Main car body
+                ctx.fillStyle = carObj.color;
+                ctx.beginPath();
+                // Car body - main shape
+                ctx.moveTo(-w/2, h/3);
+                ctx.lineTo(-w/2, -h/3);
+                ctx.lineTo(-w/4, -h/2);
+                ctx.lineTo(w/4, -h/2);
+                ctx.lineTo(w/2, -h/3);
+                ctx.lineTo(w/2, h/3);
+                ctx.closePath();
+                ctx.fill();
+                
+                // Add a racing stripe
+                ctx.fillStyle = adjustColor(carObj.color, -40); // Darker shade of car color
+                ctx.beginPath();
+                ctx.rect(-w/10, -h/2, w/5, h*5/6);
+                ctx.fill();
+                
+                // Add windows
+                ctx.fillStyle = "#333";
+                ctx.beginPath();
+                ctx.moveTo(-w/4, -h/3);
+                ctx.lineTo(-w/6, -h/2.2);
+                ctx.lineTo(w/6, -h/2.2);
+                ctx.lineTo(w/4, -h/3);
+                ctx.closePath();
+                ctx.fill();
+                
+                // Add headlights
+                ctx.fillStyle = "#FFFF99";
+                ctx.beginPath();
+                ctx.arc(w/3, -h/3, w/10, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.arc(-w/3, -h/3, w/10, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Add wheels with more detail
+                // Left front wheel
+                drawWheel(-w/2, -h/5, w/8);
+                // Right front wheel
+                drawWheel(w/2, -h/5, w/8);
+                // Left rear wheel
+                drawWheel(-w/2, h/5, w/8);
+                // Right rear wheel
+                drawWheel(w/2, h/5, w/8);
+                
+                // Draw driver name above car with improved visibility
+                // Add semi-transparent background for better readability
+                ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
+                const nameWidth = carObj.name.length * 8 + 10; // Adjust width based on name length
+                ctx.fillRect(-nameWidth/2, -carObj.height - 25, nameWidth, 20);
+                
+                // Draw text with stronger outline
+                ctx.fillStyle = "white";
+                ctx.strokeStyle = "black";
+                ctx.lineWidth = 3;
+                ctx.font = "bold 16px Arial";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.strokeText(carObj.name, 0, -carObj.height - 15); // Use relative coordinates
+                ctx.fillText(carObj.name, 0, -carObj.height - 15); // Use relative coordinates
+                
+                ctx.restore();
+            }
+            
+            // Function to draw a detailed wheel
+            function drawWheel(x, y, radius) {
+                // Tire
+                ctx.fillStyle = "#111";
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Rim
+                ctx.fillStyle = "#CCC";
+                ctx.beginPath();
+                ctx.arc(x, y, radius * 0.6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Hub cap
+                ctx.fillStyle = "#999";
+                ctx.beginPath();
+                ctx.arc(x, y, radius * 0.3, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Lug nuts
+                ctx.fillStyle = "#333";
+                for (let i = 0; i < 5; i++) {
+                    const angle = (i / 5) * Math.PI * 2;
+                    const lugX = x + Math.cos(angle) * radius * 0.4;
+                    const lugY = y + Math.sin(angle) * radius * 0.4;
+                    
+                    ctx.beginPath();
+                    ctx.arc(lugX, lugY, radius * 0.1, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+            
+            // Helper function to adjust color brightness
+            function adjustColor(color, amount) {
+                // Convert hex to RGB
+                let hex = color;
+                if (hex.startsWith('#')) {
+                    hex = hex.slice(1);
+                }
+                
+                // Parse the color
+                let r = parseInt(hex.slice(0, 2), 16);
+                let g = parseInt(hex.slice(2, 4), 16);
+                let b = parseInt(hex.slice(4, 6), 16);
+                
+                // Adjust the brightness
+                r = Math.max(0, Math.min(255, r + amount));
+                g = Math.max(0, Math.min(255, g + amount));
+                b = Math.max(0, Math.min(255, b + amount));
+                
+                // Convert back to hex
+                return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+            }
+            
+            // Draw trees
+            function drawTrees() {
+                const theme = trackThemes[currentTheme];
+                
+                for (let tree of trees) {
+                    if (tree.type === 'pine') {
+                        // Draw pine tree
+                        // Trunk
+                        ctx.fillStyle = theme.treeTrunk;
+                        ctx.fillRect(tree.x - tree.size/8, tree.y, tree.size/4, tree.size/2);
+                        
+                        // Tree triangle layers
+                        ctx.fillStyle = theme.treeFill[0];
+                        for (let i = 0; i < 3; i++) {
+                            const layerSize = tree.size - i * (tree.size/4);
+                            ctx.beginPath();
+                            ctx.moveTo(tree.x, tree.y - tree.size/2 - i * (tree.size/4));
+                            ctx.lineTo(tree.x - layerSize/2, tree.y - i * (tree.size/4));
+                            ctx.lineTo(tree.x + layerSize/2, tree.y - i * (tree.size/4));
+                            ctx.closePath();
+                            ctx.fill();
+                        }
+                    } else {
+                        // Draw oak tree
+                        // Trunk
+                        ctx.fillStyle = theme.treeTrunk;
+                        ctx.fillRect(tree.x - tree.size/6, tree.y - tree.size/8, tree.size/3, tree.size/2);
+                        
+                        // Leaves (circular crown)
+                        ctx.fillStyle = theme.treeFill[1];
+                        ctx.beginPath();
+                        ctx.arc(tree.x, tree.y - tree.size/2, tree.size/2, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            }
+            
+            function drawCountdown() {
+                if (!countdownStarted) return;
+                
+                const currentTime = Date.now();
+                const elapsedTime = currentTime - countdownStartTime;
+                const secondsElapsed = Math.floor(elapsedTime / 1000);
+                
+                // Calculate countdown value
+                const displayValue = Math.max(0, countdownValue - secondsElapsed);
+                
+                // Center of screen
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                
+                // Draw countdown
+                ctx.fillStyle = "white";
+                ctx.font = "bold 120px Arial";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                
+                if (displayValue > 0) {
+                    ctx.fillText(displayValue.toString(), centerX, centerY);
+                } else {
+                    ctx.fillText("GO!", centerX, centerY);
+                    
+                    // Start race after "GO!"
+                    if (elapsedTime >= 4000 && !raceStarted) {
+                        startRace();
+                    }
+                }
+                
+                ctx.textAlign = "left";
+                ctx.textBaseline = "alphabetic";
+            }
+            
+            function drawSpeedometer() {
+                const speedPercentage = Math.abs(window.car.speed) / originalMaxSpeed;
+                const width = 150;
+                const height = 15;
+                const x = 20;
+                const y = 20;
+                
+                // Background
+                ctx.fillStyle = "rgba(0,0,0,0.5)";
+                ctx.fillRect(x, y, width, height);
+                
+                // Speed indicator
+                ctx.fillStyle = window.car.speed >= 0 ? "green" : "red";
+                ctx.fillRect(x, y, width * speedPercentage, height);
+                
+                // Border
+                ctx.strokeStyle = "white";
+                ctx.lineWidth = 2;
+                ctx.strokeRect(x, y, width, height);
+                
+                // Text
+                ctx.fillStyle = "white";
+                ctx.font = "14px Arial";
+                ctx.fillText(`Speed: ${Math.abs(Math.floor(window.car.speed * 20))} km/h`, x + 5, y + 30);
+            }
+            
+            function drawRaceInfo() {
+                const x = 20;
+                const y = 90;
+                const width = 250;
+                
+                // Calculate dynamic height based on race state and lap times
+                let height;
+                
+                if (!raceStarted) {
+                    height = 100;
+                } else if (raceFinished) {
+                    // Only show actual lap times recorded
+                    height = 150 + (lapTimes.length * 25);
+                } else {
+                    // During race, standard height with space for potential lap times
+                    height = 200;
+                }
+                
+                // Panel background
+                ctx.fillStyle = "rgba(0,0,0,0.7)";
+                ctx.fillRect(x, y, width, height);
+                ctx.strokeStyle = "white";
+                ctx.lineWidth = 2;
+                ctx.strokeRect(x, y, width, height);
+                
+                // Text
+                ctx.fillStyle = "white";
+                ctx.font = "16px Arial";
+                
+                if (!raceStarted) {
+                    if (!countdownStarted) {
+                        ctx.fillText("Press any key to start", x + 20, y + 40);
+                    } else {
+                        ctx.fillText("Get ready!", x + 20, y + 40);
+                    }
+                    return;
+                }
+                
+                const currentTime = raceFinished ? 
+                    (window.car.finishTime ? raceStartTime + window.car.finishTime : raceStartTime + window.car.totalLapTime) : 
+                    Date.now();
+                
+                if (raceFinished) {
+                    // Calculate total race time - use finishTime which is the actual race duration
+                    let totalRaceTime;
+                    if (window.car.finished && window.car.finishTime > 0) {
+                        totalRaceTime = window.car.finishTime;
+                    } else {
+                        // Fallback to sum of lap times if finishTime is not available
+                        totalRaceTime = window.car.totalLapTime;
+                    }
+                    
+                    console.log("Race finished stats:", {
+                        finishTime: window.car.finishTime,
+                        totalLapTime: window.car.totalLapTime,
+                        displayedTime: totalRaceTime
+                    });
+                    
+                    ctx.fillText(`Total time: ${formatTime(totalRaceTime)}`, x + 20, y + 40);
+                    
+                    // Display best lap
+                    if (bestLapTime < Infinity) {
+                        ctx.fillText(`Best lap: ${formatTime(bestLapTime)}`, x + 20, y + 65);
+                    }
+                    
+                    // Display only recorded lap times
+                    ctx.font = "14px Arial";
+                    for (let i = 0; i < lapTimes.length; i++) {
+                        ctx.fillText(`Lap ${i+1}: ${formatTime(lapTimes[i])}`, x + 20, y + 95 + i * 25);
+                    }
+                } else {
+                    const elapsedTime = currentTime - raceStartTime;
+                    const currentLapTime = window.car.currentLap > 0 ? currentTime - currentLapStartTime : 0;
+                    
+                    if (window.car.currentLap === 0) {
+                        ctx.fillText(`Get to the start line!`, x + 20, y + 30);
+                    } else {
+                        ctx.fillText(`Lap: ${window.car.currentLap}/${TOTAL_LAPS}`, x + 20, y + 30);
+                    }
+                    
+                    ctx.fillText(`Current lap: ${formatTime(currentLapTime)}`, x + 20, y + 55);
+                    ctx.fillText(`Total time: ${formatTime(elapsedTime)}`, x + 20, y + 80);
+                    
+                    // Display best lap
+                    if (bestLapTime < Infinity) {
+                        ctx.fillText(`Best lap: ${formatTime(bestLapTime)}`, x + 20, y + 105);
+                    }
+                    
+                    // Display previous lap times
+                    ctx.font = "14px Arial";
+                    for (let i = 0; i < lapTimes.length; i++) {
+                        ctx.fillText(`Lap ${i+1}: ${formatTime(lapTimes[i])}`, x + 20, y + 135 + i * 25);
+                    }
+                }
+            }
+
+            function drawPositionAndResults() {
+                const x = canvas.width / 2;
+                const y = 40;
+                
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                
+                if (raceFinished) {
+                    const winnerName = window.car.position === 1 ? window.playerName :
+                                     (opponents[0].position === 1 ? window.ai1Name : window.ai2Name);
+                    raceResult = `${winnerName} wins the race!`;
+                    ctx.fillStyle = "#FFD700";
+                    ctx.font = "bold 32px Arial";
+                    ctx.fillText(raceResult, x, y);
+                } else if (raceStarted) {
+                    let positionText = `Position: ${window.car.position}/${allCars.length}`;
+                    ctx.fillStyle = "white";
+                    ctx.strokeStyle = "black";
+                    ctx.lineWidth = 4;
+                    ctx.font = "bold 28px Arial";
+                    ctx.strokeText(positionText, x, y);
+                    ctx.fillText(positionText, x, y);
+                }
+                
+                ctx.textAlign = "left";
+                ctx.textBaseline = "alphabetic";
+            }
+
+            // Main game loop
+            function gameLoop() {
+                // Clear canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw track
+                generateTrack();
+                
+                // Update and draw opponents
+                for (let opponent of opponents) {
+                    updateOpponent(opponent);
+                    drawCar(opponent);
+                }
+                
+                // Update car
+                if (!raceFinished || !window.car.finished) {
+                    updateCar();
+                }
+                
+                // Draw player car
+                drawCar(window.car);
+                
+                // Update positions if race is active
+                if (raceStarted && !raceFinished) {
+                    updatePositions();
+                }
+                
+                // Draw UI
+                drawSpeedometer();
+                drawRaceInfo();
+                
+                // Draw position and results at top center (add this line)
+                drawPositionAndResults();
+                
+                // Draw countdown
+                if (countdownStarted) {
+                    drawCountdown();
+                }
+                
+                // Continue animation
+                requestAnimationFrame(gameLoop);
+            }
+            
+            // Update car positions in the race
+            function updatePositions() {
+                // Calculate race progress for each car based on laps and position on track
+                allCars.forEach(carObj => {
+                    // Calculate progress: lap number + fraction of track completed
+                    const progress = carObj.currentLap;
+                    
+                    // Store progress for sorting
+                    carObj.raceProgress = progress;
+                });
+                
+                // Sort cars by progress (highest first)
+                const sortedCars = [...allCars].sort((a, b) => {
+                    // First by lap
+                    if (b.currentLap !== a.currentLap) {
+                        return b.currentLap - a.currentLap;
+                    }
+                    
+                    // If same lap, compare by total lap time (less is better)
+                    return a.totalLapTime - b.totalLapTime;
+                });
+                
+                // Assign positions
+                sortedCars.forEach((carObj, index) => {
+                    carObj.position = index + 1;
+                });
+            }
+            
+            // Start the game loop should be the last thing
+            console.log("Starting game loop...");
+            gameLoop();
+
+            // Add the difficulty settings and function
+            let difficultySettings = {
+                beginner: {
+                    player: {
+                        maxSpeed: 4.8,      // Keep player fast
+                        acceleration: 0.2,
+                        friction: 0.02,
+                        straightBoost: 0.06
+                    },
+                    ai1: {
+                        maxSpeed: 1.8,      // Reduced from 2.5
+                        acceleration: 0.07,  // Reduced from 0.1
+                        friction: 0.12,     // Increased friction to slow them down
+                        difficulty: 0.2,    // Reduced from 0.3 for less precise steering
+                        straightBoost: 0.01  // Reduced from 0.02
+                    },
+                    ai2: {
+                        maxSpeed: 1.6,      // Reduced from 2.2
+                        acceleration: 0.06,  // Reduced from 0.09
+                        friction: 0.15,     // Increased friction
+                        difficulty: 0.15,   // Reduced from 0.4
+                        straightBoost: 0.008 // Reduced from 0.015
+                    }
+                },
+                intermediate: {
+                    player: {
+                        maxSpeed: 4.8,      // Keep same as before
+                        acceleration: 0.2,
+                        friction: 0.02,
+                        straightBoost: 0.06
+                    },
+                    ai1: {
+                        maxSpeed: 4.2,      // Slightly slower than expert (5.0)
+                        acceleration: 0.17,  // Slightly lower than expert (0.2)
+                        friction: 0.03,     // Slightly higher than expert (0.025)
+                        difficulty: 0.85,   // Less precise than expert (0.98)
+                        straightBoost: 0.035 // Less boost than expert (0.045)
+                    },
+                    ai2: {
+                        maxSpeed: 4.0,      // Slightly slower than expert (4.8)
+                        acceleration: 0.16,  // Slightly lower than expert (0.19)
+                        friction: 0.035,    // Slightly higher than expert (0.03)
+                        difficulty: 0.8,    // Less precise than expert (0.95)
+                        straightBoost: 0.03  // Less boost than expert (0.04)
+                    }
+                },
+                expert: {
+                    player: {
+                        maxSpeed: 4.2,      // Keep player settings balanced
+                        acceleration: 0.16,
+                        friction: 0.05,
+                        straightBoost: 0.03
+                    },
+                    ai1: {
+                        maxSpeed: 5.0,      // Increased from 4.5
+                        acceleration: 0.2,   // Increased from 0.18
+                        friction: 0.025,    // Reduced from 0.03 for better handling
+                        difficulty: 0.98,    // Increased from 0.95 - almost perfect steering
+                        straightBoost: 0.045 // Increased from 0.04
+                    },
+                    ai2: {
+                        maxSpeed: 4.8,      // Increased from 4.3
+                        acceleration: 0.19,  // Increased from 0.17
+                        friction: 0.03,     // Reduced from 0.035
+                        difficulty: 0.95,    // Increased from 0.9
+                        straightBoost: 0.04  // Increased from 0.035
+                    }
+                }
+            };
+
+            function changeDifficulty() {
+                const difficulty = document.getElementById('difficultySelect').value;
+                const settings = difficultySettings[difficulty];
+                
+                // Update player settings
+                window.car.maxSpeed = settings.player.maxSpeed;
+                window.car.acceleration = settings.player.acceleration;
+                window.car.friction = settings.player.friction;
+                window.car.straightBoost = settings.player.straightBoost;
+                
+                // Update AI1 settings
+                opponents[0].maxSpeed = settings.ai1.maxSpeed;
+                opponents[0].acceleration = settings.ai1.acceleration;
+                opponents[0].friction = settings.ai1.friction;
+                opponents[0].difficulty = settings.ai1.difficulty;
+                opponents[0].straightBoost = settings.ai1.straightBoost;
+                
+                // Update AI2 settings
+                opponents[1].maxSpeed = settings.ai2.maxSpeed;
+                opponents[1].acceleration = settings.ai2.acceleration;
+                opponents[1].friction = settings.ai2.friction;
+                opponents[1].difficulty = settings.ai2.difficulty;
+                opponents[1].straightBoost = settings.ai2.straightBoost;
+                
+                // Add debug logging to verify changes
+                console.log("Difficulty changed to:", difficulty);
+                console.log("AI1 settings:", {
+                    maxSpeed: opponents[0].maxSpeed,
+                    acceleration: opponents[0].acceleration,
+                    friction: opponents[0].friction,
+                    difficulty: opponents[0].difficulty
+                });
+                console.log("AI2 settings:", {
+                    maxSpeed: opponents[1].maxSpeed,
+                    acceleration: opponents[1].acceleration,
+                    friction: opponents[1].friction,
+                    difficulty: opponents[1].difficulty
+                });
+                
+                // Reset the race with new settings
+                resetRace();
+            }
+
+            // Add this after car and opponents definitions to set initial colors
+            window.addEventListener('load', function() {
+                // Set initial names and colors from the input fields
+                window.playerName = document.getElementById('playerName').value;
+                window.ai1Name = document.getElementById('ai1Name').value;
+                window.ai2Name = document.getElementById('ai2Name').value;
+                
+                window.car.color = document.getElementById('playerColor').value;
+                opponents[0].color = document.getElementById('ai1Color').value;
+                opponents[1].color = document.getElementById('ai2Color').value;
+            });
+
+            // Make functions available globally
+            window.toggleCustomizeMenu = toggleCustomizeMenu;
+            window.resetRace = resetRace;
+            window.changeDifficulty = changeDifficulty;
+            window.applyCustomization = applyCustomization;
+
+            // Add this function to handle theme changes
+            function changeTrackTheme() {
+                const theme = document.getElementById('trackThemeSelect').value;
+                currentTheme = theme;
+                
+                // Clear existing trees and waypoints
+                trees = [];
+                waypoints = [];
+                
+                // Regenerate track elements
+                generateTrees();
+                generateWaypoints();
+                
+                // Reset game state
+                lapTimes = [];
+                bestLapTime = Infinity;
+                raceStartTime = 0;
+                currentLapStartTime = 0;
+                raceFinished = false;
+                raceStarted = false;
+                crossedFinishLine = false;
+                countdownStarted = false;
+                firstLineCrossed = false;
+                raceResult = "";
+                
+                // Reset car positions
+                window.car.x = startLineLeft.x - 50;
+                window.car.y = (startLineLeft.y + startLineRight.y) / 2;
+                window.car.angle = 0;
+                window.car.speed = 0;
+                window.car.currentLap = 0;
+                window.car.position = 1;
+                window.car.finished = false;
+                window.car.finishTime = 0;
+                
+                opponents[0].x = window.car.x - 30;
+                opponents[0].y = window.car.y + 20;
+                opponents[0].angle = 0;
+                opponents[0].speed = 0;
+                opponents[0].currentLap = 0;
+                opponents[0].position = 2;
+                opponents[0].finished = false;
+                opponents[0].finishTime = 0;
+                
+                opponents[1].x = window.car.x - 30;
+                opponents[1].y = window.car.y - 20;
+                opponents[1].angle = 0;
+                opponents[1].speed = 0;
+                opponents[1].currentLap = 0;
+                opponents[1].position = 3;
+                opponents[1].finished = false;
+                opponents[1].finishTime = 0;
+                
+                console.log("Changed theme to:", theme);
+            }
+
+            // Make the function available globally
+            window.changeTrackTheme = changeTrackTheme;
+
+            // Add initial generation of track elements after canvas setup:
+            // Add this right after canvas width/height setup
+            generateTrees();
+            generateWaypoints();
+        });
+
+        // Add this function before the window.addEventListener('load', ...) line
+        function startGame() {
+            const nameInput = document.getElementById('welcomeNameInput');
+            const name = nameInput.value.trim();
+            
+            if (name === '') {
+                nameInput.style.borderColor = '#ff4444';
+                nameInput.classList.add('shake');
+                setTimeout(() => {
+                    nameInput.classList.remove('shake');
+                }, 500);
+                return;
+            }
+            
+            // Update player name to the input value
+            window.playerName = name; // Use window.playerName to ensure it's accessible
+            document.getElementById('playerName').value = name; // This line updates the customize menu as well
+            
+            // Update car name to match player name - access car through window
+            if (window.car) {
+                window.car.name = window.playerName;
+            } else {
+                console.error("Car object not available yet");
+            }
+            
+            // Fade out welcome screen and show track selection
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            welcomeScreen.style.opacity = '0';
+            welcomeScreen.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                welcomeScreen.style.display = 'none';
+                // Show track selection screen
+                const trackSelect = document.getElementById('trackSelectScreen');
+                trackSelect.style.display = 'flex';
+                trackSelect.style.opacity = '0';
+                
+                setTimeout(() => {
+                    trackSelect.style.opacity = '1';
+                    trackSelect.style.transition = 'opacity 0.5s ease';
+                }, 50);
+            }, 500);
+        }
+
+        // Add track selection handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const difficultyOptions = document.querySelectorAll('.difficulty-option');
+            const trackOptions = document.querySelectorAll('.track-option');
+            const continueButton = document.getElementById('continueToGame');
+            
+            let selectedDifficulty = null;
+            let selectedTrack = null;
+
+            function updateContinueButton() {
+                continueButton.disabled = !(selectedDifficulty && selectedTrack);
+            }
+
+            difficultyOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    difficultyOptions.forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+                    selectedDifficulty = option.dataset.difficulty;
+                    updateContinueButton();
+                });
+            });
+
+            trackOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    trackOptions.forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+                    selectedTrack = option.dataset.track;
+                    updateContinueButton();
+                });
+            });
+
+            continueButton.addEventListener('click', () => {
+                try {
+                    // Store the selected options for later use
+                    const selectedDifficultyValue = selectedDifficulty;
+                    const selectedTrackValue = selectedTrack;
+                    
+                    console.log("Selected difficulty:", selectedDifficultyValue);
+                    console.log("Selected track:", selectedTrackValue);
+                    
+                    // Fade out track selection and show game
+                    const trackSelect = document.getElementById('trackSelectScreen');
+                    trackSelect.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        trackSelect.style.display = 'none';
+                        // Show and fade in the game
+                        const gameCanvas = document.getElementById('gameCanvas');
+                        gameCanvas.style.display = 'block';
+                        gameCanvas.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            gameCanvas.style.opacity = '1';
+                            gameCanvas.style.transition = 'opacity 0.5s ease';
+                            
+                            // Set the selected options after the canvas is visible
+                            try {
+                                document.getElementById('difficultySelect').value = selectedDifficultyValue;
+                                document.getElementById('trackThemeSelect').value = selectedTrackValue;
+                                
+                                // Try to apply the selections if the functions are available
+                                if (typeof window.changeDifficulty === 'function') {
+                                    window.changeDifficulty();
+                                }
+                                
+                                if (typeof window.changeTrackTheme === 'function') {
+                                    window.changeTrackTheme();
+                                }
+                                
+                                // Initialize the game
+                                if (typeof window.resetRace === 'function') {
+                                    window.resetRace();
+                                } else {
+                                    console.error("resetRace function not available");
+                                }
+                            } catch (e) {
+                                console.error("Error applying selections:", e);
+                            }
+                        }, 50);
+                    }, 500);
+                } catch (e) {
+                    console.error("Error in continueToGame click handler:", e);
+                    // Fallback to directly showing the game canvas
+                    document.getElementById('trackSelectScreen').style.display = 'none';
+                    document.getElementById('gameCanvas').style.display = 'block';
+                }
+            });
+        });
+
+        // Add this CSS for the shake animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px); }
+                75% { transform: translateX(10px); }
+            }
+            .shake {
+                animation: shake 0.3s ease-in-out;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Modify the window.addEventListener('load', ...) section to hide the canvas initially
+        window.addEventListener('load', function() {
+            // Get canvas and context
+            const canvas = document.getElementById('gameCanvas');
+            canvas.style.display = 'none'; // Hide canvas initially
+            
+            // ... rest of the existing load event code ...
+        });
+
+        // Add event listener for Enter key on the welcome screen
+        document.getElementById('welcomeNameInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                startGame();
+            }
+        });
+    </script>
+</body>
+</html>
