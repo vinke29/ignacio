@@ -5,6 +5,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Me - Ignacio Vinke</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .about-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .about-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--color-forest);
+        }
+
+        .about-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-form {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-form h2 {
+            margin-bottom: 1.5rem;
+            color: var(--color-forest);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--color-forest);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-red);
+        }
+
+        .submit-button {
+            background: var(--color-red);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background: #d32f2f;
+            transform: translateY(-2px);
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -14,8 +87,39 @@
 
     <section class="about-section">
         <div class="about-content">
-            <!-- We'll fill this in later with your personal content -->
-            <p>Coming soon...</p>
+            <p>I like building things. When I was little, this meant a lot of legos. Nowadays, it's usually cool customer experiences. If they are challenging to build, even better.</p>
+            
+            <p>I try to focus my time on tackling big problems. If I need help, I'm usually pretty good at sending people cookies and convincing them to help me out.</p>
+            
+            <p>I ask a ton of questions. I feel this helps me be right more often than not. And if not, at least I know where I stand most of the time.</p>
+            
+            <p>I've had the amazing opportunity to learn from many smart people throughout my career. I'm grateful for this and try to keep myself curious.</p>
+            
+            <p>My friends think I'm lucky. I think it's more about being positive about things and adaptable.</p>
+            
+            <p>If you'd like to chat or have a cool idea, do feel free to reach out!</p>
+
+            <div class="contact-form">
+                <h2>Get in Touch</h2>
+                <form action="https://formspree.io/f/xanepeqn" method="POST">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-button">Send Message</button>
+                </form>
+            </div>
         </div>
     </section>
 </body>
