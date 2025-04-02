@@ -40,28 +40,50 @@ const projects = [
 
 // Function to create project tiles
 function createProjectTiles() {
-    const projectGrid = document.querySelector('.project-grid');
-    
+    const projectsSection = document.querySelector('.projects-section');
+    const projectGrid = document.createElement('div');
+    projectGrid.className = 'project-grid';
+
     projects.forEach(project => {
         const tile = document.createElement('div');
         tile.className = 'project-tile';
         tile.style.gridColumn = project.gridColumn;
         tile.style.gridRow = project.gridRow;
-        
+
         tile.innerHTML = `
-            <img class="project-image" src="${project.image}" alt="${project.title}">
-            <div class="project-content">
+            <img src="${project.image}" alt="${project.title}">
+            <div class="content">
                 <h2>${project.title}</h2>
                 <p>${project.description}</p>
                 <div class="project-tags">
-                    ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
                 </div>
-                <a href="${project.link}" target="_blank">View Project</a>
+                <a href="${project.link}" class="view-project">View Project</a>
             </div>
         `;
-        
+
+        // Add click handler only for mobile devices
+        if (window.matchMedia('(hover: none)').matches) {
+            tile.addEventListener('click', (e) => {
+                // Don't trigger if clicking the link
+                if (e.target.tagName === 'A') return;
+                
+                // Toggle active state
+                tile.classList.toggle('active');
+                
+                // Close other tiles
+                document.querySelectorAll('.project-tile.active').forEach(otherTile => {
+                    if (otherTile !== tile) {
+                        otherTile.classList.remove('active');
+                    }
+                });
+            });
+        }
+
         projectGrid.appendChild(tile);
     });
+
+    projectsSection.appendChild(projectGrid);
 }
 
 // Initialize the page
