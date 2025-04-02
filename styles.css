@@ -45,24 +45,26 @@ header p {
 /* Projects Grid */
 .projects-section {
     width: 100%;
-    padding: 0;
+    padding: 0 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .project-grid {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
     width: 100%;
-    gap: 0;
 }
 
 .project-tile {
     position: relative;
-    width: calc(33.333% - 2px);
-    margin: 1px;
+    width: 100%;
     aspect-ratio: 1;
     overflow: hidden;
     cursor: pointer;
     transition: transform 0.3s ease;
+    border-radius: 12px;
 }
 
 .project-tile img {
@@ -158,13 +160,22 @@ header p {
 
 /* Responsive Design */
 @media (max-width: 1200px) {
-    .project-tile {
-        width: calc(50% - 2px);
+    .project-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 768px) {
+    .projects-section {
+        padding: 0 1rem;
+    }
+    
+    .project-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
     .project-tile {
-        width: calc(100% - 2px);
+        aspect-ratio: 3/4;
     }
 } 
