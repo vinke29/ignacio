@@ -5,9 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ignacio Vinke - Portfolio</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .social-icons {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .social-icons a {
+            color: var(--color-forest);
+            font-size: 1.5rem;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            transform: translateY(-3px);
+            color: var(--color-red);
+        }
+
+        @media (max-width: 768px) {
+            .social-icons {
+                position: relative;
+                top: 0;
+                right: 0;
+                justify-content: center;
+                margin-top: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
+        <div class="social-icons">
+            <a href="https://www.linkedin.com/in/ivinke/" target="_blank" title="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://www.instagram.com/vinke29/?hl=en" target="_blank" title="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://x.com/igvinke/" target="_blank" title="Twitter">
+                <i class="fab fa-x-twitter"></i>
+            </a>
+            <a href="about.html#contact-form" title="Email">
+                <i class="far fa-envelope"></i>
+            </a>
+        </div>
         <h1>Ignacio Vinke</h1>
         <p>Hi! I like building and trying out new things.<br>Check out some of my projects below.</p>
     </header>
