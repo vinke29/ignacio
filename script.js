@@ -37,6 +37,15 @@ const projects = [
         gridRow: "span 1"
     },
     {
+        title: "Bookfinder",
+        description: "Exploring cool book website ideas — from color grids and emotional spectrums to blind date deals and hype curves.",
+        image: "images/bookfinder.png",
+        link: "https://books-project-navy.vercel.app",
+        tags: ["Next.js", "Design", "Data Viz"],
+        gridColumn: "span 1",
+        gridRow: "span 1"
+    },
+    {
         title: "About Me",
         description: "Learn more about who I am and what drives me.",
         image: "images/aboutme.png",
