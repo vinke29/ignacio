@@ -1,12 +1,30 @@
 // Project data with real projects
 const projects = [
     {
-        title: "To-do.art",
-        description: "A Mondrian-inspired task manager that turns your to-do list into art.",
-        image: "images/mondrian.png",
-        link: "https://to-do.art",
-        tags: ["React", "Canvas", "Art"],
+        title: "About Me",
+        description: "Learn more about who I am and what drives me.",
+        image: "images/aboutme.png",
+        link: "about.html",
+        tags: ["Personal", "Background"],
         gridColumn: "span 2",
+        gridRow: "span 1"
+    },
+    {
+        title: "HomeFix",
+        description: "A subscription-based handyman service — one visit a month, one flat price, your own dedicated handyman.",
+        image: "images/homefix.png",
+        link: "https://homefix.team",
+        tags: ["Startup", "Subscription", "Service"],
+        gridColumn: "span 1",
+        gridRow: "span 1"
+    },
+    {
+        title: "Billie",
+        description: "Smart invoice management platform that streamlines invoicing through intelligent automation.",
+        image: "images/billienow.png",
+        link: "https://billienow.com",
+        tags: ["Fintech", "Automation", "SaaS"],
+        gridColumn: "span 1",
         gridRow: "span 1"
     },
     {
@@ -17,6 +35,24 @@ const projects = [
         tags: ["Photography", "Gallery", "Art"],
         gridColumn: "span 1",
         gridRow: "span 2"
+    },
+    {
+        title: "Bookfinder",
+        description: "Exploring cool book website ideas — from color grids and emotional spectrums to blind date deals and hype curves.",
+        image: "images/bookfinder.png",
+        link: "https://books-project-navy.vercel.app",
+        tags: ["Next.js", "Design", "Data Viz"],
+        gridColumn: "span 1",
+        gridRow: "span 1"
+    },
+    {
+        title: "To-do.art",
+        description: "A Mondrian-inspired task manager that turns your to-do list into art.",
+        image: "images/mondrian.png",
+        link: "https://to-do.art",
+        tags: ["React", "Canvas", "Art"],
+        gridColumn: "span 2",
+        gridRow: "span 1"
     },
     {
         title: "Car Racing Game (Desktop Only)",
@@ -34,24 +70,6 @@ const projects = [
         link: "https://vinke29.github.io/bomba/",
         tags: ["Game", "Physics", "JavaScript"],
         gridColumn: "span 1",
-        gridRow: "span 1"
-    },
-    {
-        title: "Bookfinder",
-        description: "Exploring cool book website ideas — from color grids and emotional spectrums to blind date deals and hype curves.",
-        image: "images/bookfinder.png",
-        link: "https://books-project-navy.vercel.app",
-        tags: ["Next.js", "Design", "Data Viz"],
-        gridColumn: "span 1",
-        gridRow: "span 1"
-    },
-    {
-        title: "About Me",
-        description: "Learn more about who I am and what drives me.",
-        image: "images/aboutme.png",
-        link: "about.html",
-        tags: ["Personal", "Background"],
-        gridColumn: "span 2",
         gridRow: "span 1"
     }
 ];
