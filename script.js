@@ -94,27 +94,13 @@ function createProjectTiles() {
                 <div class="project-tags">
                     ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
                 </div>
-                <a href="${project.link}" class="view-project">View Project</a>
             </div>
         `;
 
-        // Add click handler only for mobile devices
-        if (window.matchMedia('(hover: none)').matches) {
-            tile.addEventListener('click', (e) => {
-                // Don't trigger if clicking the link
-                if (e.target.tagName === 'A') return;
-                
-                // Toggle active state
-                tile.classList.toggle('active');
-                
-                // Close other tiles
-                document.querySelectorAll('.project-tile.active').forEach(otherTile => {
-                    if (otherTile !== tile) {
-                        otherTile.classList.remove('active');
-                    }
-                });
-            });
-        }
+        tile.style.cursor = 'pointer';
+        tile.addEventListener('click', () => {
+            window.open(project.link, '_blank');
+        });
 
         projectGrid.appendChild(tile);
     });
