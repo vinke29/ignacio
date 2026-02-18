@@ -37,6 +37,15 @@ const projects = [
         gridRow: "span 2"
     },
     {
+        title: "CSV Chart Builder",
+        description: "Drop a CSV and Claude picks the best chart for your data. Bar, line, bubble, scatter, and more.",
+        image: "images/chartbuilder.svg",
+        link: "https://csv-chart-builder.vercel.app",
+        tags: ["AI", "Data Viz", "React"],
+        gridColumn: "span 1",
+        gridRow: "span 1"
+    },
+    {
         title: "Bookfinder",
         description: "Exploring cool book website ideas — from color grids and emotional spectrums to blind date deals and hype curves.",
         image: "images/bookfinder.png",
