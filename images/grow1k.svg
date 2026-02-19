@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+  <!-- Background -->
+  <rect width="800" height="800" fill="#0f1117"/>
+
+  <!-- Subtle grid lines -->
+  <line x1="100" y1="580" x2="700" y2="580" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+  <line x1="100" y1="500" x2="700" y2="500" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+  <line x1="100" y1="420" x2="700" y2="420" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+  <line x1="100" y1="340" x2="700" y2="340" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+  <line x1="100" y1="260" x2="700" y2="260" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+
+  <!-- Bar chart bars — AI mentions rising over time -->
+  <rect x="118" y="490" width="48" height="90" rx="4" fill="#3b82f6" fill-opacity="0.55"/>
+  <rect x="186" y="458" width="48" height="122" rx="4" fill="#3b82f6" fill-opacity="0.55"/>
+  <rect x="254" y="430" width="48" height="150" rx="4" fill="#3b82f6" fill-opacity="0.65"/>
+  <rect x="322" y="405" width="48" height="175" rx="4" fill="#3b82f6" fill-opacity="0.65"/>
+  <rect x="390" y="365" width="48" height="215" rx="4" fill="#6366f1" fill-opacity="0.75"/>
+  <rect x="458" y="335" width="48" height="245" rx="4" fill="#6366f1" fill-opacity="0.80"/>
+  <rect x="526" y="300" width="48" height="280" rx="4" fill="#818cf8" fill-opacity="0.85"/>
+  <rect x="594" y="265" width="48" height="315" rx="4" fill="#a5b4fc" fill-opacity="0.90"/>
+
+  <!-- Trend line overlay -->
+  <polyline
+    points="142,485 210,452 278,424 346,398 414,358 482,328 550,292 618,258"
+    fill="none"
+    stroke="#c7d2fe"
+    stroke-width="2.5"
+    stroke-opacity="0.5"
+    stroke-dasharray="6 4"
+    stroke-linecap="round"
+  />
+
+  <!-- X-axis base line -->
+  <line x1="100" y1="580" x2="700" y2="580" stroke="#ffffff" stroke-opacity="0.15" stroke-width="1.5"/>
+
+  <!-- Quarter labels -->
+  <text x="142" y="605" text-anchor="middle" font-family="monospace" font-size="13" fill="#ffffff" fill-opacity="0.3">Q1</text>
+  <text x="210" y="605" text-anchor="middle" font-family="monospace" font-size="13" fill="#ffffff" fill-opacity="0.3">Q2</text>
+  <text x="278" y="605" text-anchor="middle" font-family="monospace" font-size="13" fill="#ffffff" fill-opacity="0.3">Q3</text>
+  <text x="346" y="605" text-anchor="middle" font-family="monospace" font-size="13" fill="#ffffff" fill-opacity="0.3">Q4</text>
+  <text x="414" y="605" text-anchor="middle" font-family="monospace" font-size="13" fill="#ffffff" fill-opacity="0.3">Q1</text>
+  <text x="482" y="605" text-anchor="middle" font-family="monospace" font-size="13" fill="#ffffff" fill-opacity="0.3">Q2</text>
+  <text x="550" y="605" text-anchor="middle" font-family="monospace" font-size="13" fill="#ffffff" fill-opacity="0.3">Q3</text>
+  <text x="618" y="605" text-anchor="middle" font-family="monospace" font-size="13" fill="#ffffff" fill-opacity="0.3">Q4</text>
+
+  <!-- Year labels -->
+  <text x="244" y="635" text-anchor="middle" font-family="monospace" font-size="14" fill="#ffffff" fill-opacity="0.2">2023</text>
+  <text x="516" y="635" text-anchor="middle" font-family="monospace" font-size="14" fill="#ffffff" fill-opacity="0.2">2024</text>
+
+  <!-- Title text -->
+  <text x="400" y="148" text-anchor="middle" font-family="monospace" font-size="13" letter-spacing="4" fill="#6366f1" fill-opacity="0.9">S&amp;P 500</text>
+  <text x="400" y="200" text-anchor="middle" font-family="sans-serif" font-size="38" font-weight="700" fill="#ffffff" fill-opacity="0.92">AI in Earnings Calls</text>
+  <text x="400" y="238" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#ffffff" fill-opacity="0.35">493 companies · 2,678 transcripts · 2023–2025</text>
+</svg>

@@ -80,6 +80,15 @@ const projects = [
         tags: ["Game", "Physics", "JavaScript"],
         gridColumn: "span 1",
         gridRow: "span 1"
+    },
+    {
+        title: "AI in S&P 500 Earnings Calls",
+        description: "Dashboard tracking how every S&P 500 company talks about AI across 2,678 earnings call transcripts — with quotes, charts, and stock correlation.",
+        image: "images/grow1k.svg",
+        link: "https://grow-1k.vercel.app",
+        tags: ["Data", "AI", "Finance"],
+        gridColumn: "span 1",
+        gridRow: "span 1"
     }
 ];
 
