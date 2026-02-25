@@ -10,6 +10,15 @@ const projects = [
         gridRow: "span 1"
     },
     {
+        title: "listen.",
+        description: "Turn any article into a podcast episode. Paste a URL, upload a PDF, or drop in text — get studio-quality audio in seconds.",
+        image: "images/listentothis.svg",
+        link: "https://listentothis.xyz",
+        tags: ["AI", "Audio", "SaaS"],
+        gridColumn: "span 1",
+        gridRow: "span 1"
+    },
+    {
         title: "HomeFix",
         description: "A subscription-based handyman service — one visit a month, one flat price, your own dedicated handyman.",
         image: "images/homefix.png",
