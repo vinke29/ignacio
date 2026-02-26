@@ -6,43 +6,33 @@ const projects = [
         tag: "Personal",
         accent: "#6366F1",
         svg: `<svg viewBox="0 0 200 130" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <!-- Shirt/shoulders -->
-            <path d="M 46 130 L 50 102 Q 53 92 100 88 Q 147 92 150 102 L 154 130 Z"
-                  fill="#6366F1" stroke="#1a1a1a" stroke-width="1.5" stroke-linejoin="round"/>
-            <!-- V-neck -->
-            <path d="M 87 91 L 100 101 L 113 91" fill="none" stroke="#4338CA" stroke-width="2" stroke-linejoin="round"/>
-            <!-- Neck -->
-            <rect x="93" y="76" width="14" height="16" rx="7" fill="#F5C4A0" stroke="#1a1a1a" stroke-width="1.5"/>
-            <!-- Left ear -->
-            <ellipse cx="73" cy="53" rx="5" ry="7" fill="#F5C4A0" stroke="#1a1a1a" stroke-width="1.5"/>
-            <!-- Right ear -->
-            <ellipse cx="127" cy="53" rx="5" ry="7" fill="#F5C4A0" stroke="#1a1a1a" stroke-width="1.5"/>
-            <!-- Head -->
-            <ellipse cx="100" cy="51" rx="27" ry="29" fill="#F5C4A0" stroke="#1a1a1a" stroke-width="2"/>
-            <!-- Hair -->
-            <path d="M 73 44 Q 73 18 100 18 Q 127 18 127 44 Q 120 30 100 30 Q 80 30 73 44 Z" fill="#2A2220"/>
-            <!-- Eyebrows -->
-            <path d="M 85 40 Q 92 37 97 40" fill="none" stroke="#2A2220" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M 103 40 Q 108 37 115 40" fill="none" stroke="#2A2220" stroke-width="1.5" stroke-linecap="round"/>
-            <!-- Eyes -->
-            <ellipse cx="91" cy="50" rx="5" ry="5.5" fill="white" stroke="#1a1a1a" stroke-width="1"/>
-            <ellipse cx="109" cy="50" rx="5" ry="5.5" fill="white" stroke="#1a1a1a" stroke-width="1"/>
-            <circle cx="92" cy="51" r="3" fill="#2A2220"/>
-            <circle cx="110" cy="51" r="3" fill="#2A2220"/>
-            <circle cx="93" cy="50" r="1.2" fill="white"/>
-            <circle cx="111" cy="50" r="1.2" fill="white"/>
-            <!-- Nose -->
-            <path d="M 100 55 Q 97 63 100 65 Q 103 63 100 55" fill="#E8A882" fill-opacity="0.5"/>
-            <!-- Smile -->
-            <path d="M 89 68 Q 100 77 111 68" fill="none" stroke="#2A2220" stroke-width="2" stroke-linecap="round"/>
-            <!-- Blush -->
-            <circle cx="79" cy="62" r="7" fill="#F97316" fill-opacity="0.12"/>
-            <circle cx="121" cy="62" r="7" fill="#F97316" fill-opacity="0.12"/>
-            <!-- Corner color accents -->
-            <circle cx="20" cy="16" r="5" fill="#FBBF24" fill-opacity="0.85"/>
-            <circle cx="180" cy="18" r="6" fill="#22C55E" fill-opacity="0.85"/>
-            <circle cx="174" cy="114" r="5" fill="#EC4899" fill-opacity="0.85"/>
-            <circle cx="26" cy="112" r="4" fill="#06B6D4" fill-opacity="0.85"/>
+            <!-- Laptop base -->
+            <rect x="22" y="88" width="156" height="14" rx="5" fill="#4B5563" stroke="#1a1a1a" stroke-width="1.5"/>
+            <!-- Touchpad -->
+            <rect x="80" y="92" width="40" height="7" rx="3" fill="#6B7280"/>
+            <!-- Screen housing -->
+            <rect x="30" y="12" width="140" height="80" rx="7" fill="#1E293B" stroke="#1a1a1a" stroke-width="1.5"/>
+            <!-- Screen -->
+            <rect x="36" y="18" width="128" height="68" rx="4" fill="#0F172A"/>
+            <!-- Avatar circle on screen -->
+            <circle cx="68" cy="42" r="16" fill="#6366F1"/>
+            <!-- Avatar face -->
+            <path d="M 52 36 Q 52 24 68 24 Q 84 24 84 36 Q 80 28 68 28 Q 56 28 52 36 Z" fill="#2A2220"/>
+            <circle cx="63" cy="41" r="2" fill="white" fill-opacity="0.9"/>
+            <circle cx="73" cy="41" r="2" fill="white" fill-opacity="0.9"/>
+            <path d="M 63 48 Q 68 53 73 48" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- Name bar -->
+            <rect x="92" y="32" width="60" height="7" rx="3" fill="white" fill-opacity="0.75"/>
+            <!-- Subtitle bar -->
+            <rect x="92" y="44" width="44" height="5" rx="2" fill="white" fill-opacity="0.35"/>
+            <!-- Tag badges: multicolor -->
+            <rect x="92" y="55" width="26" height="9" rx="4" fill="#FBBF24" fill-opacity="0.9"/>
+            <rect x="122" y="55" width="22" height="9" rx="4" fill="#22C55E" fill-opacity="0.9"/>
+            <rect x="148" y="55" width="12" height="9" rx="4" fill="#F97316" fill-opacity="0.9"/>
+            <!-- Bottom code line -->
+            <rect x="40" y="73" width="36" height="4" rx="2" fill="#6366F1" fill-opacity="0.7"/>
+            <rect x="80" y="73" width="26" height="4" rx="2" fill="#FBBF24" fill-opacity="0.5"/>
+            <rect x="110" y="73" width="48" height="4" rx="2" fill="#22C55E" fill-opacity="0.4"/>
         </svg>`,
     },
     {
