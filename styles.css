@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
 
 * {
     margin: 0;
@@ -16,7 +16,7 @@ body {
     padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background-color: var(--color-cream);
-    color: #2c3e50;
+    color: #1a1a1a;
     min-height: 100vh;
 }
 
@@ -34,7 +34,7 @@ header h1 {
 header p {
     font-size: 1.1rem;
     line-height: 1.6;
-    color: #666;
+    color: #888;
     max-width: 500px;
     margin: 0 auto;
 }
@@ -42,109 +42,109 @@ header p {
 /* ── Grid ── */
 .projects-section {
     width: 100%;
+    padding: 0 12px 12px;
 }
 
 .project-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 3px;
-    background: var(--color-cream);
+    gap: 10px;
 }
 
 /* ── Tile ── */
 .project-tile {
     position: relative;
-    aspect-ratio: 4 / 3;
-    padding: 22px 24px;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    aspect-ratio: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;
     cursor: pointer;
     overflow: hidden;
-    transition: filter 0.2s ease;
+    border: 1px solid rgba(0,0,0,0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.project-tile::after {
+/* Accent tint overlay on hover */
+.project-tile::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(255, 255, 255, 0);
-    transition: background 0.2s ease;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    border-radius: 16px;
     pointer-events: none;
 }
 
 @media (hover: hover) {
     .project-tile:hover {
-        filter: brightness(1.18);
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
     }
 
-    .project-tile:hover .tile-hover-line {
-        transform: scaleX(1);
+    .project-tile:hover::before {
+        opacity: 0.06;
     }
 
-    .project-tile:hover .tile-desc {
-        opacity: 0.7;
+    .project-tile:hover .tile-watermark {
+        opacity: 0.12;
     }
 }
 
-/* ── Top row: number + tag ── */
-.tile-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+/* ── Watermark number ── */
+.tile-watermark {
+    position: absolute;
+    top: -16px;
+    right: 12px;
+    font-size: 160px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--accent);
+    opacity: 0.07;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -6px;
+    transition: opacity 0.25s ease;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-.tile-num {
-    font-size: 10px;
-    color: rgba(255, 255, 255, 0.2);
-    font-weight: 500;
-    letter-spacing: 0.14em;
-}
-
-.tile-tag {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-}
-
-/* ── Bottom: title + desc ── */
-.tile-bottom {
+/* ── Content ── */
+.tile-content {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     gap: 6px;
 }
 
+.tile-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
 .tile-title {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(17px, 1.8vw, 26px);
+    font-size: clamp(18px, 1.8vw, 26px);
     font-weight: 600;
-    color: #ffffff;
+    color: #111;
     line-height: 1.2;
-    letter-spacing: -0.2px;
+    letter-spacing: -0.3px;
 }
 
 .tile-desc {
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.45);
+    font-size: 12px;
+    color: #999;
     line-height: 1.6;
-    opacity: 0.5;
-    transition: opacity 0.2s ease;
+    margin-top: 2px;
 }
 
-/* ── Accent line (slides in on hover) ── */
-.tile-hover-line {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
-}
-
-/* ── Mobile ── */
+/* ── Responsive ── */
 @media (max-width: 900px) {
     .project-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -154,10 +154,15 @@ header p {
 @media (max-width: 540px) {
     .project-grid {
         grid-template-columns: 1fr;
-        gap: 2px;
+        padding: 0 8px 8px;
+        gap: 8px;
     }
 
     header h1 {
         font-size: 2.5rem;
+    }
+
+    .tile-watermark {
+        font-size: 120px;
     }
 }

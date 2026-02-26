@@ -5,8 +5,7 @@ const projects = [
         link: "about.html",
         tag: "Personal",
         num: "01",
-        bg: "#1C1C2E",
-        accent: "#818CF8",
+        accent: "#6366F1",
     },
     {
         title: "listen.",
@@ -14,17 +13,15 @@ const projects = [
         link: "https://listentothis.xyz",
         tag: "AI · Audio",
         num: "02",
-        bg: "#2C1810",
-        accent: "#FB923C",
+        accent: "#F97316",
     },
     {
         title: "HomeFix",
-        description: "Subscription handyman service — one flat price, your own dedicated pro.",
+        description: "Subscription handyman — one flat price, your own dedicated pro.",
         link: "https://homefix.team",
         tag: "Startup",
         num: "03",
-        bg: "#0E2016",
-        accent: "#4ADE80",
+        accent: "#22C55E",
     },
     {
         title: "Billie",
@@ -32,17 +29,15 @@ const projects = [
         link: "https://billienow.com",
         tag: "Fintech",
         num: "04",
-        bg: "#0E1C2C",
-        accent: "#60A5FA",
+        accent: "#3B82F6",
     },
     {
         title: "Aguacate Morado",
-        description: "A minimalist photography portfolio capturing moments through a unique lens.",
+        description: "A minimalist photography portfolio.",
         link: "https://aguacatemorado.com",
         tag: "Photography",
         num: "05",
-        bg: "#1A0E2C",
-        accent: "#C084FC",
+        accent: "#A855F7",
     },
     {
         title: "CSV Chart Builder",
@@ -50,17 +45,15 @@ const projects = [
         link: "https://csv-chart-builder.vercel.app",
         tag: "AI · Data",
         num: "06",
-        bg: "#0A2620",
-        accent: "#34D399",
+        accent: "#14B8A6",
     },
     {
         title: "Bookfinder",
-        description: "Book discovery reimagined — color grids, emotional spectrums, blind date deals.",
+        description: "Book discovery reimagined — color grids, emotional spectrums, blind dates.",
         link: "https://books-project-navy.vercel.app",
         tag: "Design",
         num: "07",
-        bg: "#2C1A1A",
-        accent: "#FB7185",
+        accent: "#EC4899",
     },
     {
         title: "To-do.art",
@@ -68,17 +61,15 @@ const projects = [
         link: "https://to-do.art",
         tag: "Art · React",
         num: "08",
-        bg: "#2C0E0E",
-        accent: "#F87171",
+        accent: "#EF4444",
     },
     {
         title: "Car Racing",
-        description: "A fast-paced browser racing game with realistic physics and dynamic tracks.",
+        description: "A fast-paced browser racing game with realistic physics.",
         link: "racetrack.html",
         tag: "Game",
         num: "09",
-        bg: "#2A1A08",
-        accent: "#FBBF24",
+        accent: "#F59E0B",
     },
     {
         title: "Bomba",
@@ -86,17 +77,15 @@ const projects = [
         link: "https://vinke29.github.io/bomba/",
         tag: "Game",
         num: "10",
-        bg: "#141414",
-        accent: "#A78BFA",
+        accent: "#8B5CF6",
     },
     {
         title: "AI in S&P 500",
-        description: "How every S&P 500 company talks about AI across 2,678 earnings call transcripts.",
+        description: "How every S&P 500 company talks about AI across 2,678 earnings calls.",
         link: "https://grow-1k.vercel.app",
         tag: "Data · Finance",
         num: "11",
-        bg: "#08141E",
-        accent: "#38BDF8",
+        accent: "#06B6D4",
     },
 ]
 
@@ -108,18 +97,15 @@ function createProjectTiles() {
     projects.forEach(project => {
         const tile = document.createElement('div')
         tile.className = 'project-tile'
-        tile.style.background = project.bg
+        tile.style.setProperty('--accent', project.accent)
 
         tile.innerHTML = `
-            <div class="tile-top">
-                <span class="tile-num">${project.num}</span>
-                <span class="tile-tag" style="color: ${project.accent}">${project.tag}</span>
-            </div>
-            <div class="tile-bottom">
+            <div class="tile-watermark">${project.num}</div>
+            <div class="tile-content">
+                <span class="tile-tag">${project.tag}</span>
                 <h2 class="tile-title">${project.title}</h2>
                 <p class="tile-desc">${project.description}</p>
             </div>
-            <div class="tile-hover-line" style="background: ${project.accent}"></div>
         `
 
         tile.addEventListener('click', () => {
@@ -129,9 +115,6 @@ function createProjectTiles() {
                 window.location.href = project.link
             }
         })
-
-        tile.addEventListener('touchstart', () => tile.classList.add('active'), { passive: true })
-        tile.addEventListener('touchend', () => setTimeout(() => tile.classList.remove('active'), 400), { passive: true })
 
         projectGrid.appendChild(tile)
     })
