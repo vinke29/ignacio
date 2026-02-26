@@ -11,8 +11,8 @@
     --color-forest:  #3D6B3D;
     --color-red:     #EF4444;
 
-    --bg-page:       #F5F1E9;
-    --bg-card:       #FEFCF8;
+    --bg-page:       #E4DDD0;
+    --bg-card:       #FAF7F2;
     --text-primary:  #1a1a1a;
     --text-muted:    #aaa;
     --text-heading:  #3D6B3D;
@@ -61,6 +61,8 @@ body {
     transform: translateY(-3px);
     color: var(--color-red);
 }
+#theme-toggle:focus { outline: none; }
+#theme-toggle:focus-visible { outline: 2px solid var(--color-forest); outline-offset: 4px; border-radius: 6px; }
 #moon-path  { display: none; }
 body.dark #moon-path  { display: block; }
 body.dark #sun-rays   { display: none; }
@@ -145,6 +147,11 @@ header p {
     background: var(--accent);
     opacity: 0.08;
     pointer-events: none;
+}
+
+body.dark .tile-visual::before {
+    background: #ffffff;
+    opacity: 0.03;
 }
 
 .tile-visual svg {

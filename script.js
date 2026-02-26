@@ -6,25 +6,35 @@ const projects = [
         tag: "Personal",
         accent: "#6366F1",
         svg: `<svg viewBox="0 0 200 130" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <!-- Person: refined proportions -->
-            <circle cx="78" cy="44" r="14" fill="#6366F1" fill-opacity="0.9"/>
-            <rect x="70" y="58" width="16" height="22" rx="4" fill="#6366F1" fill-opacity="0.75"/>
-            <line x1="70" y1="64" x2="56" y2="78" stroke="#6366F1" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
-            <line x1="86" y1="64" x2="100" y2="78" stroke="#6366F1" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
-            <line x1="74" y1="80" x2="70" y2="96" stroke="#6366F1" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
-            <line x1="82" y1="80" x2="86" y2="96" stroke="#6366F1" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
-            <!-- Lightbulb: yellow, refined -->
-            <circle cx="144" cy="44" r="18" fill="#FBBF24" fill-opacity="0.9" class="pulse-anim"/>
-            <line x1="138" y1="62" x2="150" y2="62" stroke="#FBBF24" stroke-width="2" stroke-linecap="round"/>
-            <line x1="140" y1="67" x2="148" y2="67" stroke="#FBBF24" stroke-width="2" stroke-linecap="round"/>
-            <!-- Filament -->
-            <path d="M 137 48 Q 144 42 151 48" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
-            <!-- Rays: orange, thin -->
-            <line x1="144" y1="19" x2="144" y2="14" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
-            <line x1="160" y1="26" x2="163" y2="22" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
-            <line x1="128" y1="26" x2="125" y2="22" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
-            <line x1="166" y1="44" x2="171" y2="44" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
-            <line x1="122" y1="44" x2="117" y2="44" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
+            <!-- Lightbulb: yellow, left -->
+            <circle cx="44" cy="58" r="18" fill="#FBBF24" fill-opacity="0.9" class="pulse-anim"/>
+            <line x1="38" y1="75" x2="50" y2="75" stroke="#FBBF24" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="40" y1="80" x2="48" y2="80" stroke="#FBBF24" stroke-width="2" stroke-linecap="round"/>
+            <path d="M 37 62 Q 44 55 51 62" fill="none" stroke="white" stroke-width="1.5" opacity="0.65"/>
+            <line x1="44" y1="33" x2="44" y2="28" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
+            <line x1="56" y1="40" x2="59" y2="37" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
+            <line x1="32" y1="40" x2="29" y2="37" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
+            <line x1="66" y1="58" x2="70" y2="58" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
+            <line x1="22" y1="58" x2="18" y2="58" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
+            <!-- Code window: indigo, center -->
+            <rect x="78" y="22" width="56" height="76" rx="6" fill="#6366F1" fill-opacity="0.85"/>
+            <rect x="78" y="22" width="56" height="18" rx="6" fill="#4338CA"/>
+            <rect x="78" y="32" width="56" height="8" fill="#4338CA"/>
+            <circle cx="88" cy="31" r="3" fill="#EF4444" fill-opacity="0.85"/>
+            <circle cx="97" cy="31" r="3" fill="#FBBF24" fill-opacity="0.85"/>
+            <circle cx="106" cy="31" r="3" fill="#22C55E" fill-opacity="0.85"/>
+            <rect x="86" y="50" width="30" height="4" rx="2" fill="white" fill-opacity="0.5"/>
+            <rect x="86" y="59" width="22" height="4" rx="2" fill="#FBBF24" fill-opacity="0.7"/>
+            <rect x="86" y="68" width="28" height="4" rx="2" fill="white" fill-opacity="0.3"/>
+            <rect x="86" y="77" width="18" height="4" rx="2" fill="#F97316" fill-opacity="0.65"/>
+            <rect x="86" y="86" width="26" height="4" rx="2" fill="white" fill-opacity="0.2"/>
+            <!-- Rocket: cyan, right -->
+            <ellipse cx="162" cy="60" rx="10" ry="24" fill="#06B6D4" fill-opacity="0.9"/>
+            <circle cx="162" cy="50" r="5" fill="white" fill-opacity="0.45"/>
+            <path d="M 152 74 Q 145 72 143 80 L 152 78 Z" fill="#06B6D4" fill-opacity="0.7"/>
+            <path d="M 172 74 Q 179 72 181 80 L 172 78 Z" fill="#06B6D4" fill-opacity="0.7"/>
+            <ellipse cx="162" cy="88" rx="5" ry="8" fill="#F97316" fill-opacity="0.85" class="pulse-anim"/>
+            <ellipse cx="162" cy="91" rx="3" ry="5" fill="#FBBF24" fill-opacity="0.9" class="pulse-anim"/>
         </svg>`,
     },
     {
