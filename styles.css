@@ -40,9 +40,11 @@ header h1 {
 }
 
 header p {
-    font-size: 0.95rem;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1rem;
+    font-style: italic;
     line-height: 1.6;
-    color: #999;
+    color: #888;
     max-width: 440px;
     margin: 0 auto;
 }
