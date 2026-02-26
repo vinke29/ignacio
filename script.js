@@ -4,7 +4,6 @@ const projects = [
         description: "Who I am, what I've built, and what drives me.",
         link: "about.html",
         tag: "Personal",
-        num: "01",
         accent: "#6366F1",
     },
     {
@@ -12,7 +11,6 @@ const projects = [
         description: "Turn any article into a podcast episode in seconds.",
         link: "https://listentothis.xyz",
         tag: "AI · Audio",
-        num: "02",
         accent: "#F97316",
     },
     {
@@ -20,7 +18,6 @@ const projects = [
         description: "Subscription handyman — one flat price, your own dedicated pro.",
         link: "https://homefix.team",
         tag: "Startup",
-        num: "03",
         accent: "#22C55E",
     },
     {
@@ -28,15 +25,13 @@ const projects = [
         description: "Smart invoice management through intelligent automation.",
         link: "https://billienow.com",
         tag: "Fintech",
-        num: "04",
         accent: "#3B82F6",
     },
     {
         title: "Aguacate Morado",
-        description: "A minimalist photography portfolio.",
+        description: "A minimalist photography portfolio capturing moments through a unique lens.",
         link: "https://aguacatemorado.com",
         tag: "Photography",
-        num: "05",
         accent: "#A855F7",
     },
     {
@@ -44,7 +39,6 @@ const projects = [
         description: "Drop a CSV and Claude picks the best chart for your data.",
         link: "https://csv-chart-builder.vercel.app",
         tag: "AI · Data",
-        num: "06",
         accent: "#14B8A6",
     },
     {
@@ -52,7 +46,6 @@ const projects = [
         description: "Book discovery reimagined — color grids, emotional spectrums, blind dates.",
         link: "https://books-project-navy.vercel.app",
         tag: "Design",
-        num: "07",
         accent: "#EC4899",
     },
     {
@@ -60,7 +53,6 @@ const projects = [
         description: "A Mondrian-inspired task manager that turns your to-do list into art.",
         link: "https://to-do.art",
         tag: "Art · React",
-        num: "08",
         accent: "#EF4444",
     },
     {
@@ -68,7 +60,6 @@ const projects = [
         description: "A fast-paced browser racing game with realistic physics.",
         link: "racetrack.html",
         tag: "Game",
-        num: "09",
         accent: "#F59E0B",
     },
     {
@@ -76,7 +67,6 @@ const projects = [
         description: "Physics-based cannon game — aim at hotel rooms, eliminate evil businessmen.",
         link: "https://vinke29.github.io/bomba/",
         tag: "Game",
-        num: "10",
         accent: "#8B5CF6",
     },
     {
@@ -84,7 +74,6 @@ const projects = [
         description: "How every S&P 500 company talks about AI across 2,678 earnings calls.",
         link: "https://grow-1k.vercel.app",
         tag: "Data · Finance",
-        num: "11",
         accent: "#06B6D4",
     },
 ]
@@ -94,14 +83,21 @@ function createProjectTiles() {
     const projectGrid = document.createElement('div')
     projectGrid.className = 'project-grid'
 
-    projects.forEach(project => {
+    projects.forEach((project, i) => {
         const tile = document.createElement('div')
         tile.className = 'project-tile'
         tile.style.setProperty('--accent', project.accent)
+        // Stagger animation phase so tiles don't all move in sync
+        tile.style.setProperty('--phase', `${(i * 1.3).toFixed(1)}s`)
 
         tile.innerHTML = `
-            <div class="tile-watermark">${project.num}</div>
-            <div class="tile-content">
+            <div class="tile-visual">
+                <div class="tile-dot dot-a"></div>
+                <div class="tile-dot dot-b"></div>
+                <div class="tile-dot dot-c"></div>
+                <div class="tile-ring"></div>
+            </div>
+            <div class="tile-text">
                 <span class="tile-tag">${project.tag}</span>
                 <h2 class="tile-title">${project.title}</h2>
                 <p class="tile-desc">${project.description}</p>
