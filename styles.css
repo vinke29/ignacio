@@ -20,16 +20,21 @@ body {
     min-height: 100vh;
 }
 
-/* ── Header (original font preserved) ── */
+/* ── Hero header ── */
 header {
+    min-height: 38vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
     text-align: center;
-    padding: 3rem 1rem 2rem;
 }
 
 header h1 {
     font-family: 'Playfair Display', Georgia, serif;
     color: #3D6B3D;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
     font-size: 3.5rem;
     font-weight: 600;
 }
@@ -91,7 +96,7 @@ header p {
     position: absolute;
     inset: 0;
     background: var(--accent);
-    opacity: 0.20;
+    opacity: 0.08;
     pointer-events: none;
 }
 
@@ -136,27 +141,92 @@ header p {
     margin-top: 1px;
 }
 
-/* ── EQ bar animation (listen. card) ── */
+/* ── Animations ── */
+
+/* EQ bars — listen. */
 @keyframes eq-pulse {
     0%, 100% { transform: scaleY(1); }
     50%       { transform: scaleY(0.2); }
 }
-
 .eq-bar {
     transform-box: fill-box;
     transform-origin: 50% 100%;
     animation: eq-pulse 1.3s ease-in-out infinite;
 }
-
 .eq-bar:nth-child(5) { animation-delay: 0s; }
 .eq-bar:nth-child(6) { animation-delay: 0.18s; }
 .eq-bar:nth-child(7) { animation-delay: 0.36s; }
 .eq-bar:nth-child(8) { animation-delay: 0.1s; }
 
+/* Bob — gentle float */
+@keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-5px); }
+}
+.bob-anim {
+    animation: bob 2.8s ease-in-out infinite;
+}
+
+/* Swing — wrench rock */
+@keyframes swing {
+    0%, 100% { transform: rotate(-10deg); }
+    50%       { transform: rotate(10deg); }
+}
+.swing-anim {
+    transform-box: fill-box;
+    transform-origin: 30% 70%;
+    animation: swing 2.2s ease-in-out infinite;
+}
+
+/* Pulse scale — glowing element */
+@keyframes pulse-scale {
+    0%, 100% { transform: scale(1);    opacity: 1; }
+    50%       { transform: scale(1.18); opacity: 0.75; }
+}
+.pulse-anim {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    animation: pulse-scale 2s ease-in-out infinite;
+}
+
+/* Wheel spin */
+@keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+.spin-anim {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    animation: spin-slow 2s linear infinite;
+}
+
+/* Cannonball arc */
+@keyframes fly-arc {
+    0%, 100% { transform: translate(0, 0); }
+    50%       { transform: translate(-8px, -8px); }
+}
+.fly-anim {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    animation: fly-arc 2s ease-in-out infinite;
+}
+
+/* Chart dot pulse */
+@keyframes dot-pulse {
+    0%, 100% { r: 3.5; opacity: 1; }
+    50%       { r: 6;   opacity: 0.6; }
+}
+.dot-pulse {
+    animation: dot-pulse 2s ease-in-out infinite;
+}
+
 /* ── Responsive ── */
 @media (max-width: 900px) {
     .project-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+    header {
+        min-height: 28vh;
     }
 }
 
@@ -165,7 +235,9 @@ header p {
         grid-template-columns: 1fr;
         gap: 8px;
     }
-
+    header {
+        min-height: 24vh;
+    }
     header h1 {
         font-size: 2.6rem;
     }
