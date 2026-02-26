@@ -6,33 +6,46 @@ const projects = [
         tag: "Personal",
         accent: "#6366F1",
         svg: `<svg viewBox="0 0 200 130" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <!-- Desk -->
+            <rect x="14" y="95" width="172" height="7" rx="2" fill="white" stroke="#1a1a1a" stroke-width="1.5"/>
+            <line x1="28"  y1="102" x2="28"  y2="118" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="172" y1="102" x2="172" y2="118" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
             <!-- Laptop base -->
-            <rect x="22" y="88" width="156" height="14" rx="5" fill="#4B5563" stroke="#1a1a1a" stroke-width="1.5"/>
-            <!-- Touchpad -->
-            <rect x="80" y="92" width="40" height="7" rx="3" fill="#6B7280"/>
-            <!-- Screen housing -->
-            <rect x="30" y="12" width="140" height="80" rx="7" fill="#1E293B" stroke="#1a1a1a" stroke-width="1.5"/>
-            <!-- Screen -->
-            <rect x="36" y="18" width="128" height="68" rx="4" fill="#0F172A"/>
-            <!-- Avatar circle on screen -->
-            <circle cx="68" cy="42" r="16" fill="#6366F1"/>
-            <!-- Avatar face -->
-            <path d="M 52 36 Q 52 24 68 24 Q 84 24 84 36 Q 80 28 68 28 Q 56 28 52 36 Z" fill="#2A2220"/>
-            <circle cx="63" cy="41" r="2" fill="white" fill-opacity="0.9"/>
-            <circle cx="73" cy="41" r="2" fill="white" fill-opacity="0.9"/>
-            <path d="M 63 48 Q 68 53 73 48" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-            <!-- Name bar -->
-            <rect x="92" y="32" width="60" height="7" rx="3" fill="white" fill-opacity="0.75"/>
-            <!-- Subtitle bar -->
-            <rect x="92" y="44" width="44" height="5" rx="2" fill="white" fill-opacity="0.35"/>
-            <!-- Tag badges: multicolor -->
-            <rect x="92" y="55" width="26" height="9" rx="4" fill="#FBBF24" fill-opacity="0.9"/>
-            <rect x="122" y="55" width="22" height="9" rx="4" fill="#22C55E" fill-opacity="0.9"/>
-            <rect x="148" y="55" width="12" height="9" rx="4" fill="#F97316" fill-opacity="0.9"/>
-            <!-- Bottom code line -->
-            <rect x="40" y="73" width="36" height="4" rx="2" fill="#6366F1" fill-opacity="0.7"/>
-            <rect x="80" y="73" width="26" height="4" rx="2" fill="#FBBF24" fill-opacity="0.5"/>
-            <rect x="110" y="73" width="48" height="4" rx="2" fill="#22C55E" fill-opacity="0.4"/>
+            <rect x="18" y="83" width="106" height="14" rx="4" fill="#64748B" stroke="#1a1a1a" stroke-width="1.5"/>
+            <rect x="52" y="87" width="38" height="6" rx="3" fill="#94A3B8" fill-opacity="0.6"/>
+            <!-- Laptop screen -->
+            <rect x="22" y="20" width="98" height="66" rx="6" fill="#334155" stroke="#1a1a1a" stroke-width="1.5"/>
+            <rect x="26" y="24" width="90" height="58" rx="3" fill="#1E293B"/>
+            <!-- Code lines on screen -->
+            <rect x="32" y="33" width="46" height="4" rx="2" fill="#6366F1" fill-opacity="0.85"/>
+            <rect x="32" y="42" width="34" height="4" rx="2" fill="#FBBF24" fill-opacity="0.8"/>
+            <rect x="32" y="51" width="54" height="4" rx="2" fill="#6366F1" fill-opacity="0.45"/>
+            <rect x="32" y="60" width="26" height="4" rx="2" fill="#F97316" fill-opacity="0.8"/>
+            <rect x="32" y="69" width="42" height="4" rx="2" fill="#22C55E" fill-opacity="0.6"/>
+            <!-- Person: amber hoodie body -->
+            <path d="M 126 95 L 128 67 Q 130 58 148 57 Q 166 58 168 67 L 170 95 Z"
+                  fill="#D97706" stroke="#1a1a1a" stroke-width="1.5" stroke-linejoin="round"/>
+            <!-- Collar -->
+            <path d="M 137 61 Q 148 69 159 61" fill="none" stroke="#B45309" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- Arm reaching to keyboard -->
+            <path d="M 128 71 Q 114 79 96 87" fill="none" stroke="#D97706" stroke-width="9" stroke-linecap="round"/>
+            <path d="M 128 71 Q 114 79 96 87" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- Hand -->
+            <ellipse cx="94" cy="88" rx="8" ry="5" fill="#F5C4A0" stroke="#1a1a1a" stroke-width="1.5"/>
+            <!-- Neck -->
+            <rect x="143" y="50" width="10" height="11" rx="5" fill="#F5C4A0" stroke="#1a1a1a" stroke-width="1.5"/>
+            <!-- Head -->
+            <ellipse cx="148" cy="29" rx="19" ry="21" fill="#F5C4A0" stroke="#1a1a1a" stroke-width="2"/>
+            <!-- Hair -->
+            <path d="M 129 22 Q 129 4 148 4 Q 167 4 167 22 Q 162 10 148 10 Q 134 10 129 22 Z" fill="#2A2220"/>
+            <path d="M 129 22 Q 127 30 130 38" fill="none" stroke="#2A2220" stroke-width="3.5" stroke-linecap="round"/>
+            <!-- Eyes: dot style -->
+            <circle cx="141" cy="28" r="2.2" fill="#2A2220"/>
+            <circle cx="155" cy="28" r="2.2" fill="#2A2220"/>
+            <circle cx="142" cy="27" r="0.8" fill="white" fill-opacity="0.5"/>
+            <circle cx="156" cy="27" r="0.8" fill="white" fill-opacity="0.5"/>
+            <!-- Smile -->
+            <path d="M 141 37 Q 148 43 155 37" fill="none" stroke="#2A2220" stroke-width="2" stroke-linecap="round"/>
         </svg>`,
     },
     {
