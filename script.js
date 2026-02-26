@@ -6,35 +6,43 @@ const projects = [
         tag: "Personal",
         accent: "#6366F1",
         svg: `<svg viewBox="0 0 200 130" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <!-- Lightbulb: yellow, left -->
-            <circle cx="44" cy="58" r="18" fill="#FBBF24" fill-opacity="0.9" class="pulse-anim"/>
-            <line x1="38" y1="75" x2="50" y2="75" stroke="#FBBF24" stroke-width="2.5" stroke-linecap="round"/>
-            <line x1="40" y1="80" x2="48" y2="80" stroke="#FBBF24" stroke-width="2" stroke-linecap="round"/>
-            <path d="M 37 62 Q 44 55 51 62" fill="none" stroke="white" stroke-width="1.5" opacity="0.65"/>
-            <line x1="44" y1="33" x2="44" y2="28" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
-            <line x1="56" y1="40" x2="59" y2="37" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
-            <line x1="32" y1="40" x2="29" y2="37" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
-            <line x1="66" y1="58" x2="70" y2="58" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
-            <line x1="22" y1="58" x2="18" y2="58" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
-            <!-- Code window: indigo, center -->
-            <rect x="78" y="22" width="56" height="76" rx="6" fill="#6366F1" fill-opacity="0.85"/>
-            <rect x="78" y="22" width="56" height="18" rx="6" fill="#4338CA"/>
-            <rect x="78" y="32" width="56" height="8" fill="#4338CA"/>
-            <circle cx="88" cy="31" r="3" fill="#EF4444" fill-opacity="0.85"/>
-            <circle cx="97" cy="31" r="3" fill="#FBBF24" fill-opacity="0.85"/>
-            <circle cx="106" cy="31" r="3" fill="#22C55E" fill-opacity="0.85"/>
-            <rect x="86" y="50" width="30" height="4" rx="2" fill="white" fill-opacity="0.5"/>
-            <rect x="86" y="59" width="22" height="4" rx="2" fill="#FBBF24" fill-opacity="0.7"/>
-            <rect x="86" y="68" width="28" height="4" rx="2" fill="white" fill-opacity="0.3"/>
-            <rect x="86" y="77" width="18" height="4" rx="2" fill="#F97316" fill-opacity="0.65"/>
-            <rect x="86" y="86" width="26" height="4" rx="2" fill="white" fill-opacity="0.2"/>
-            <!-- Rocket: cyan, right -->
-            <ellipse cx="162" cy="60" rx="10" ry="24" fill="#06B6D4" fill-opacity="0.9"/>
-            <circle cx="162" cy="50" r="5" fill="white" fill-opacity="0.45"/>
-            <path d="M 152 74 Q 145 72 143 80 L 152 78 Z" fill="#06B6D4" fill-opacity="0.7"/>
-            <path d="M 172 74 Q 179 72 181 80 L 172 78 Z" fill="#06B6D4" fill-opacity="0.7"/>
-            <ellipse cx="162" cy="88" rx="5" ry="8" fill="#F97316" fill-opacity="0.85" class="pulse-anim"/>
-            <ellipse cx="162" cy="91" rx="3" ry="5" fill="#FBBF24" fill-opacity="0.9" class="pulse-anim"/>
+            <!-- Desk -->
+            <rect x="10" y="90" width="180" height="7" rx="2" fill="#E5E7EB" stroke="#1a1a1a" stroke-width="1.5"/>
+            <line x1="24" y1="97" x2="24" y2="116" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="176" y1="97" x2="176" y2="116" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- Laptop base -->
+            <rect x="30" y="80" width="100" height="13" rx="3" fill="#6B7280" stroke="#1a1a1a" stroke-width="1.5"/>
+            <rect x="62" y="84" width="36" height="6" rx="2" fill="#9CA3AF"/>
+            <!-- Laptop screen -->
+            <rect x="36" y="24" width="88" height="58" rx="5" fill="#334155" stroke="#1a1a1a" stroke-width="1.5"/>
+            <rect x="40" y="28" width="80" height="50" rx="3" fill="#1E293B"/>
+            <!-- Code lines on screen -->
+            <rect x="46" y="36" width="42" height="3" rx="1" fill="#6366F1" fill-opacity="0.9"/>
+            <rect x="46" y="44" width="28" height="3" rx="1" fill="#FBBF24" fill-opacity="0.8"/>
+            <rect x="46" y="52" width="50" height="3" rx="1" fill="#6366F1" fill-opacity="0.55"/>
+            <rect x="46" y="60" width="22" height="3" rx="1" fill="#F97316" fill-opacity="0.8"/>
+            <rect x="46" y="68" width="38" height="3" rx="1" fill="#22C55E" fill-opacity="0.6"/>
+            <!-- Person: hoodie indigo -->
+            <path d="M 136 90 L 138 66 Q 138 58 150 58 Q 162 58 162 66 L 164 90 Z"
+                  fill="#6366F1" stroke="#1a1a1a" stroke-width="1.5" stroke-linejoin="round"/>
+            <!-- Left arm reaching to keyboard -->
+            <path d="M 138 70 Q 124 78 108 84" fill="none" stroke="#6366F1" stroke-width="8" stroke-linecap="round"/>
+            <path d="M 138 70 Q 124 78 108 84" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- Left hand -->
+            <ellipse cx="106" cy="85" rx="7" ry="4" fill="#F5C4A0" stroke="#1a1a1a" stroke-width="1.5"/>
+            <!-- Neck -->
+            <rect x="145" y="52" width="10" height="10" rx="5" fill="#F5C4A0" stroke="#1a1a1a" stroke-width="1.5"/>
+            <!-- Head -->
+            <ellipse cx="150" cy="34" rx="16" ry="18" fill="#F5C4A0" stroke="#1a1a1a" stroke-width="2"/>
+            <!-- Hair -->
+            <path d="M 134 28 Q 134 12 150 12 Q 166 12 166 28 Q 160 20 150 20 Q 140 20 134 28 Z" fill="#2A2220"/>
+            <!-- Eyes -->
+            <circle cx="144" cy="34" r="2.2" fill="#2A2220"/>
+            <circle cx="156" cy="34" r="2.2" fill="#2A2220"/>
+            <circle cx="144.8" cy="33.2" r="0.8" fill="white" fill-opacity="0.6"/>
+            <circle cx="156.8" cy="33.2" r="0.8" fill="white" fill-opacity="0.6"/>
+            <!-- Smile -->
+            <path d="M 144 41 Q 150 46 156 41" fill="none" stroke="#2A2220" stroke-width="1.5" stroke-linecap="round"/>
         </svg>`,
     },
     {
