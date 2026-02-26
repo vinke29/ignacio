@@ -7,18 +7,64 @@
 }
 
 :root {
-    --color-cream: #F5F1E9;
-    --color-forest: #2F4F2F;
+    --color-cream:   #F5F1E9;
+    --color-forest:  #3D6B3D;
+    --color-red:     #EF4444;
+
+    --bg-page:       #F5F1E9;
+    --bg-card:       #FEFCF8;
+    --text-primary:  #1a1a1a;
+    --text-muted:    #aaa;
+    --text-heading:  #3D6B3D;
+    --border-tile:   rgba(0, 0, 0, 0.07);
+    --border-grid:   rgba(0, 0, 0, 0.06);
+    --border-text:   rgba(0, 0, 0, 0.05);
+}
+
+body.dark {
+    --bg-page:       #141414;
+    --bg-card:       #1e1e1e;
+    --text-primary:  #f0f0f0;
+    --text-muted:    #888;
+    --text-heading:  #6aad6a;
+    --border-tile:   rgba(255, 255, 255, 0.07);
+    --border-grid:   rgba(255, 255, 255, 0.06);
+    --border-text:   rgba(255, 255, 255, 0.05);
+    --color-forest:  #6aad6a;
 }
 
 body {
     margin: 0;
     padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-color: var(--color-cream);
-    color: #1a1a1a;
+    background-color: var(--bg-page);
+    color: var(--text-primary);
     min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+/* ── Theme toggle ── */
+#theme-toggle {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-forest);
+    padding: 4px;
+    line-height: 1;
+    z-index: 10;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+#theme-toggle:hover {
+    transform: translateY(-3px);
+    color: var(--color-red);
+}
+#moon-path  { display: none; }
+body.dark #moon-path  { display: block; }
+body.dark #sun-rays   { display: none; }
+body.dark #sun-circle { display: none; }
 
 /* ── Hero header ── */
 header {
@@ -29,11 +75,12 @@ header {
     justify-content: center;
     padding: 2rem 1rem;
     text-align: center;
+    position: relative;
 }
 
 header h1 {
     font-family: 'Playfair Display', Georgia, serif;
-    color: #3D6B3D;
+    color: var(--text-heading);
     margin-bottom: 0.6rem;
     font-size: 3.5rem;
     font-weight: 600;
@@ -42,7 +89,7 @@ header h1 {
 header p {
     font-size: 0.9rem;
     line-height: 1.6;
-    color: #aaa;
+    color: var(--text-muted);
     max-width: 440px;
     margin: 0 auto;
     letter-spacing: 0.01em;
@@ -52,7 +99,7 @@ header p {
 .projects-section {
     width: 100%;
     padding: 0 10px 10px;
-    border-top: 1px solid rgba(0,0,0,0.06);
+    border-top: 1px solid var(--border-grid);
 }
 
 .project-grid {
@@ -67,16 +114,16 @@ header p {
     flex-direction: column;
     border-radius: 16px;
     overflow: hidden;
-    border: 1px solid rgba(0, 0, 0, 0.07);
+    border: 1px solid var(--border-tile);
     cursor: pointer;
-    background: #FEFCF8;
+    background: var(--bg-card);
     transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
 
 @media (hover: hover) {
     .project-tile:hover {
         transform: translateY(-5px);
-        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
     }
 }
 
@@ -91,7 +138,6 @@ header p {
     padding: 12px;
 }
 
-/* Subtle tinted background */
 .tile-visual::before {
     content: '';
     position: absolute;
@@ -112,11 +158,11 @@ header p {
 .tile-text {
     flex: 1;
     padding: 12px 16px 14px;
-    background: #FEFCF8;
+    background: var(--bg-card);
     display: flex;
     flex-direction: column;
     gap: 4px;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-top: 1px solid var(--border-text);
 }
 
 .tile-tag {
@@ -131,20 +177,18 @@ header p {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: clamp(16px, 1.5vw, 22px);
     font-weight: 600;
-    color: #111;
+    color: var(--text-primary);
     line-height: 1.2;
 }
 
 .tile-desc {
     font-size: 11.5px;
-    color: #999;
+    color: var(--text-muted);
     line-height: 1.55;
     margin-top: 1px;
 }
 
 /* ── Animations ── */
-
-/* EQ bars — listen. */
 @keyframes eq-pulse {
     0%, 100% { transform: scaleY(1); }
     50%       { transform: scaleY(0.2); }
@@ -159,16 +203,12 @@ header p {
 .eq-bar:nth-child(7) { animation-delay: 0.36s; }
 .eq-bar:nth-child(8) { animation-delay: 0.1s; }
 
-/* Bob — gentle float */
 @keyframes bob {
     0%, 100% { transform: translateY(0); }
     50%       { transform: translateY(-5px); }
 }
-.bob-anim {
-    animation: bob 2.8s ease-in-out infinite;
-}
+.bob-anim { animation: bob 2.8s ease-in-out infinite; }
 
-/* Swing — wrench rock */
 @keyframes swing {
     0%, 100% { transform: rotate(-10deg); }
     50%       { transform: rotate(10deg); }
@@ -179,7 +219,6 @@ header p {
     animation: swing 2.2s ease-in-out infinite;
 }
 
-/* Pulse scale — glowing element */
 @keyframes pulse-scale {
     0%, 100% { transform: scale(1);    opacity: 1; }
     50%       { transform: scale(1.18); opacity: 0.75; }
@@ -190,7 +229,6 @@ header p {
     animation: pulse-scale 2s ease-in-out infinite;
 }
 
-/* Wheel spin */
 @keyframes spin-slow {
     from { transform: rotate(0deg); }
     to   { transform: rotate(360deg); }
@@ -201,7 +239,6 @@ header p {
     animation: spin-slow 2s linear infinite;
 }
 
-/* Cannonball arc */
 @keyframes fly-arc {
     0%, 100% { transform: translate(0, 0); }
     50%       { transform: translate(-8px, -8px); }
@@ -212,34 +249,24 @@ header p {
     animation: fly-arc 2s ease-in-out infinite;
 }
 
-/* Chart dot pulse */
 @keyframes dot-pulse {
-    0%, 100% { r: 3.5; opacity: 1; }
-    50%       { r: 6;   opacity: 0.6; }
+    0%, 100% { opacity: 1;   r: 5; }
+    50%       { opacity: 0.5; r: 7; }
 }
-.dot-pulse {
-    animation: dot-pulse 2s ease-in-out infinite;
-}
+.dot-pulse { animation: dot-pulse 2s ease-in-out infinite; }
 
 /* ── Responsive ── */
 @media (max-width: 900px) {
-    .project-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    header {
-        min-height: 28vh;
-    }
+    .project-grid { grid-template-columns: repeat(2, 1fr); }
+    header { min-height: 28vh; }
+}
+
+@media (max-width: 768px) {
+    #theme-toggle { top: 1rem; left: 1rem; }
 }
 
 @media (max-width: 540px) {
-    .project-grid {
-        grid-template-columns: 1fr;
-        gap: 8px;
-    }
-    header {
-        min-height: 24vh;
-    }
-    header h1 {
-        font-size: 2.6rem;
-    }
+    .project-grid { grid-template-columns: 1fr; gap: 8px; }
+    header { min-height: 24vh; }
+    header h1 { font-size: 2.6rem; }
 }
