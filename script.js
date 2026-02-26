@@ -6,43 +6,43 @@ const projects = [
         tag: "Personal",
         accent: "#6366F1",
         svg: `<svg viewBox="0 0 200 130" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <!-- Desk -->
-            <rect x="10" y="90" width="180" height="7" rx="2" fill="#E5E7EB" stroke="#1a1a1a" stroke-width="1.5"/>
-            <line x1="24" y1="97" x2="24" y2="116" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="176" y1="97" x2="176" y2="116" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
-            <!-- Laptop base -->
-            <rect x="30" y="80" width="100" height="13" rx="3" fill="#6B7280" stroke="#1a1a1a" stroke-width="1.5"/>
-            <rect x="62" y="84" width="36" height="6" rx="2" fill="#9CA3AF"/>
-            <!-- Laptop screen -->
-            <rect x="36" y="24" width="88" height="58" rx="5" fill="#334155" stroke="#1a1a1a" stroke-width="1.5"/>
-            <rect x="40" y="28" width="80" height="50" rx="3" fill="#1E293B"/>
-            <!-- Code lines on screen -->
-            <rect x="46" y="36" width="42" height="3" rx="1" fill="#6366F1" fill-opacity="0.9"/>
-            <rect x="46" y="44" width="28" height="3" rx="1" fill="#FBBF24" fill-opacity="0.8"/>
-            <rect x="46" y="52" width="50" height="3" rx="1" fill="#6366F1" fill-opacity="0.55"/>
-            <rect x="46" y="60" width="22" height="3" rx="1" fill="#F97316" fill-opacity="0.8"/>
-            <rect x="46" y="68" width="38" height="3" rx="1" fill="#22C55E" fill-opacity="0.6"/>
-            <!-- Person: hoodie indigo -->
-            <path d="M 136 90 L 138 66 Q 138 58 150 58 Q 162 58 162 66 L 164 90 Z"
+            <!-- Shirt/shoulders -->
+            <path d="M 46 130 L 50 102 Q 53 92 100 88 Q 147 92 150 102 L 154 130 Z"
                   fill="#6366F1" stroke="#1a1a1a" stroke-width="1.5" stroke-linejoin="round"/>
-            <!-- Left arm reaching to keyboard -->
-            <path d="M 138 70 Q 124 78 108 84" fill="none" stroke="#6366F1" stroke-width="8" stroke-linecap="round"/>
-            <path d="M 138 70 Q 124 78 108 84" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
-            <!-- Left hand -->
-            <ellipse cx="106" cy="85" rx="7" ry="4" fill="#F5C4A0" stroke="#1a1a1a" stroke-width="1.5"/>
+            <!-- V-neck -->
+            <path d="M 87 91 L 100 101 L 113 91" fill="none" stroke="#4338CA" stroke-width="2" stroke-linejoin="round"/>
             <!-- Neck -->
-            <rect x="145" y="52" width="10" height="10" rx="5" fill="#F5C4A0" stroke="#1a1a1a" stroke-width="1.5"/>
+            <rect x="93" y="76" width="14" height="16" rx="7" fill="#F5C4A0" stroke="#1a1a1a" stroke-width="1.5"/>
+            <!-- Left ear -->
+            <ellipse cx="73" cy="53" rx="5" ry="7" fill="#F5C4A0" stroke="#1a1a1a" stroke-width="1.5"/>
+            <!-- Right ear -->
+            <ellipse cx="127" cy="53" rx="5" ry="7" fill="#F5C4A0" stroke="#1a1a1a" stroke-width="1.5"/>
             <!-- Head -->
-            <ellipse cx="150" cy="34" rx="16" ry="18" fill="#F5C4A0" stroke="#1a1a1a" stroke-width="2"/>
+            <ellipse cx="100" cy="51" rx="27" ry="29" fill="#F5C4A0" stroke="#1a1a1a" stroke-width="2"/>
             <!-- Hair -->
-            <path d="M 134 28 Q 134 12 150 12 Q 166 12 166 28 Q 160 20 150 20 Q 140 20 134 28 Z" fill="#2A2220"/>
+            <path d="M 73 44 Q 73 18 100 18 Q 127 18 127 44 Q 120 30 100 30 Q 80 30 73 44 Z" fill="#2A2220"/>
+            <!-- Eyebrows -->
+            <path d="M 85 40 Q 92 37 97 40" fill="none" stroke="#2A2220" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M 103 40 Q 108 37 115 40" fill="none" stroke="#2A2220" stroke-width="1.5" stroke-linecap="round"/>
             <!-- Eyes -->
-            <circle cx="144" cy="34" r="2.2" fill="#2A2220"/>
-            <circle cx="156" cy="34" r="2.2" fill="#2A2220"/>
-            <circle cx="144.8" cy="33.2" r="0.8" fill="white" fill-opacity="0.6"/>
-            <circle cx="156.8" cy="33.2" r="0.8" fill="white" fill-opacity="0.6"/>
+            <ellipse cx="91" cy="50" rx="5" ry="5.5" fill="white" stroke="#1a1a1a" stroke-width="1"/>
+            <ellipse cx="109" cy="50" rx="5" ry="5.5" fill="white" stroke="#1a1a1a" stroke-width="1"/>
+            <circle cx="92" cy="51" r="3" fill="#2A2220"/>
+            <circle cx="110" cy="51" r="3" fill="#2A2220"/>
+            <circle cx="93" cy="50" r="1.2" fill="white"/>
+            <circle cx="111" cy="50" r="1.2" fill="white"/>
+            <!-- Nose -->
+            <path d="M 100 55 Q 97 63 100 65 Q 103 63 100 55" fill="#E8A882" fill-opacity="0.5"/>
             <!-- Smile -->
-            <path d="M 144 41 Q 150 46 156 41" fill="none" stroke="#2A2220" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M 89 68 Q 100 77 111 68" fill="none" stroke="#2A2220" stroke-width="2" stroke-linecap="round"/>
+            <!-- Blush -->
+            <circle cx="79" cy="62" r="7" fill="#F97316" fill-opacity="0.12"/>
+            <circle cx="121" cy="62" r="7" fill="#F97316" fill-opacity="0.12"/>
+            <!-- Corner color accents -->
+            <circle cx="20" cy="16" r="5" fill="#FBBF24" fill-opacity="0.85"/>
+            <circle cx="180" cy="18" r="6" fill="#22C55E" fill-opacity="0.85"/>
+            <circle cx="174" cy="114" r="5" fill="#EC4899" fill-opacity="0.85"/>
+            <circle cx="26" cy="112" r="4" fill="#06B6D4" fill-opacity="0.85"/>
         </svg>`,
     },
     {
