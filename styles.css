@@ -40,13 +40,12 @@ header h1 {
 }
 
 header p {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 1rem;
-    font-style: italic;
+    font-size: 0.9rem;
     line-height: 1.6;
-    color: #888;
+    color: #aaa;
     max-width: 440px;
     margin: 0 auto;
+    letter-spacing: 0.01em;
 }
 
 /* ── Grid ── */
